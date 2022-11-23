@@ -48,6 +48,8 @@ public class AccountActionBean extends AbstractActionBean {
   private static final String EDIT_ACCOUNT = "/WEB-INF/jsp/account/EditAccountForm.jsp";
   private static final String SIGNON = "/WEB-INF/jsp/account/SignonForm.jsp";
 
+  private static final String ADMIN= "/WEB-INF/jsp/admin/AdminDashboard.jsp";
+
   private static final List<String> LANGUAGE_LIST;
   private static final List<String> CATEGORY_LIST;
 
@@ -172,7 +174,7 @@ public class AccountActionBean extends AbstractActionBean {
       HttpSession s = context.getRequest().getSession();
       // this bean is already registered as /actions/Account.action
       s.setAttribute("accountBean", this);
-      return new RedirectResolution(CatalogActionBean.class);
+        return new RedirectResolution(CatalogActionBean.class);
     }
   }
 
@@ -204,5 +206,12 @@ public class AccountActionBean extends AbstractActionBean {
     myList = null;
     authenticated = false;
   }
-
+  /**
+   * Admin
+   *
+   * @return the resolution
+   */
+  public Resolution adminDashboard() {
+    return new ForwardResolution(ADMIN);
+  }
 }

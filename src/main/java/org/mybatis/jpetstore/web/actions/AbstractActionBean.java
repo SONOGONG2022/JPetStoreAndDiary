@@ -41,7 +41,7 @@ public abstract class AbstractActionBean implements ActionBean, Serializable {
   @Override
   public ActionBeanContext getContext() {
     return context;
-  }
+  } //현재 요청에 대한 정보
 
   @Override
   public void setContext(ActionBeanContext context) {
