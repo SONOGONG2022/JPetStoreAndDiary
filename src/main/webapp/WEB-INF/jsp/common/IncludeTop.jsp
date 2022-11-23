@@ -83,7 +83,13 @@
 				</stripes:link>
 			</c:if>
 		</c:if> <img align="middle" src="../images/separator.gif" /> <a
-				href="../help.html">?</a></div>
+				href="../help.html">?</a>
+		<stripes:link
+				beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+				event="viewAllProduct">
+			Admin Dashboard
+		</stripes:link></div>
+
 	</div>
 
 	<div id="Search">
