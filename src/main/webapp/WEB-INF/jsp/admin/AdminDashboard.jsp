@@ -21,15 +21,6 @@
         beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
   Return to Main Menu</stripes:link></div>
 
-<div id="Welcome">
-  <div id="WelcomeContent"><c:if
-          test="${sessionScope.accountBean != null }">
-    <c:if test="${sessionScope.accountBean.authenticated}">
-      Welcome ${sessionScope.accountBean.account.firstName}!
-    </c:if>
-  </c:if></div>
-</div>
-
 <div id="Catalog">
   <table>
     <tr>

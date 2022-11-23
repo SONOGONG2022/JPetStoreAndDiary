@@ -84,11 +84,20 @@
 			</c:if>
 		</c:if> <img align="middle" src="../images/separator.gif" /> <a
 				href="../help.html">?</a>
-		<stripes:link
-				beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-				event="viewAllProduct">
-			Admin Dashboard
-		</stripes:link></div>
+			<c:if test="${sessionScope.accountBean != null}">
+				<c:if test="${sessionScope.accountBean.authenticated}">
+					<c:if test="${sessionScope.accountBean.account.role != null}">
+					<c:if test="${sessionScope.accountBean.account.role == 0}">
+						<img align="middle" src="../images/separator.gif" />
+						<stripes:link
+								beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+								event="viewAllProduct">
+							Admin Dashboard
+						</stripes:link>
+					</c:if></c:if>
+				</c:if>
+			</c:if>
+		</div>
 
 	</div>
 
