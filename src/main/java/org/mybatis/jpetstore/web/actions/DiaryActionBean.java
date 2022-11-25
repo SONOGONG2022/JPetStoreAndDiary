@@ -32,9 +32,9 @@ public class DiaryActionBean extends AbstractActionBean{
     private int page = 1;
     public void setPage(int page){this.page=page;}
     public int getPage(){return this.page;}
-    private boolean clickedLike;
-    public void setClickedLike(boolean clickedLike){this.clickedLike=clickedLike;}
-    public boolean getClickedLike(){return clickedLike;}
+    private int clickedLike;
+    public void setClickedLike(int clickedLike){this.clickedLike=clickedLike;}
+    public int getClickedLike(){return clickedLike;}
 
     //my userid
     private String myUserid;

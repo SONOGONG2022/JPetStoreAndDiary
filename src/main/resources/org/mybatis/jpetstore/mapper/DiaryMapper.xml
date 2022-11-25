@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2010-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mybatis.jpetstore.mapper.DiaryMapper">
+
+    <cache />
+
+    <select id="getDiaryContent" resultType="Diary">
+        select imgurl, title, categoryid, userid, date, content,
+          (select count(*) from LIKES where d_no = no) as likes,
+          (select count(*) from COMMENTS where d_no= no) as comments
+        from DIARY where no = #{no};
+    </select>
+
+    <insert id="insertDiary" parameterType="Diary">
+        insert into DIARY (userid, title, content, categoryid, imgurl)
+        VALUES (#{userid}, #{title}, #{content}, #{categoryid}, #{imgurl});
+    </insert>
+
+    <update id="updateDiary" parameterType="Diary">
+        update DIARY set title = #{title}, content = #{content}, imgurl = #{imgurl} where no = #{no};
+    </update>
+
+    <delete id="deleteDiary" parameterType="int">
+        delete from DIARY where no = #{no};
+    </delete>
+
+    <select id="getDiaryList" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date,
+          (select count(*) from LIKES where d_no = no) as likes,
+          (select count(*) from COMMENTS where d_no = no) as comments from DIARY
+        order by no desc limit #{page}, 6;
+    </select>
+</mapper>

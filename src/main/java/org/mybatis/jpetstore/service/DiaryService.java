@@ -49,7 +49,7 @@ public class DiaryService {
         return diaryCommentsMapper.getDiaryComments(d_no);
     }
 
-    public boolean didClickedLike(Likes likes){
+    public int didClickedLike(Likes likes){
         return diaryLikesMapper.didClickedLike(likes);
     }
 }
