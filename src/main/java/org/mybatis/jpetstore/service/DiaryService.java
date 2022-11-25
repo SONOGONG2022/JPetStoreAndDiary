@@ -49,6 +49,10 @@ public class DiaryService {
         return diaryCommentsMapper.getDiaryComments(d_no);
     }
 
+    public int getDiaryCount() {
+        return diaryMapper.getDiaryCount();
+    }
+
     public int didClickedLike(Likes likes){
         return diaryLikesMapper.didClickedLike(likes);
     }

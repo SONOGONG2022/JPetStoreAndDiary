@@ -49,4 +49,8 @@
           (select count(*) from COMMENTS where d_no = no) as comments from DIARY
         order by no desc limit #{page}, 6;
     </select>
+
+    <select id="getDiaryCount" resultType="int">
+        select count(*) from DIARY;
+    </select>
 </mapper>

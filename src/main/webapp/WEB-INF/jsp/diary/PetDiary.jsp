@@ -26,6 +26,9 @@
 <%--</stripes:link></div>--%>
 
 <style>
+    div {
+        display: block;
+    }
     .diary-wrap {
         display: flex;
         margin: -1rem;
@@ -91,7 +94,7 @@
         <c:forEach var="diary" items="${actionBean.diaryList}">
             <div class="card-wrap">
                 <stripes:link class="thumbnail" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="detailDiary">
-                    <img src="http://localhost:8080/jpetstore_war/static/${diary.imgurl}" style="width:100%; height: 100%;">
+                    <img src="http://localhost:8080/JPetStoreAndDiary_war/static/${diary.imgurl}" style="width:100%; height: 100%;">
                 </stripes:link>
                 <div class="detail">
                     <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="detailDiary">
@@ -118,21 +121,46 @@
             </div>
         </c:forEach>
     </div>
-    <c:forEach begin="${actionBean.beginPage}" end="${actionBean.endPage}" step="1" var="index">
-        <c:choose>
-            <c:when test="${actionBean.pageNumber==index}">
-                ${index}
-            </c:when>
-            <c:otherwise>
-                <stripes:link
-                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                        event="viewDiary">
+    <div>
+        <c:if test="${actionBean.prev}">
+            <stripes:link
+                    beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                    event="viewDiaryBoard">
+                prev
+                <stripes:param name="page" value="${actionBean.page - 1}" />
+            </stripes:link>
+        </c:if>
+        <c:forEach begin="${actionBean.beginPage}" end="${actionBean.endPage}" step="1" var="index">
+            <c:choose>
+                <c:when test="${actionBean.page==index}">
                     ${index}
-                    <stripes:param name="pageNumber" value="${index}" />
-                </stripes:link>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <stripes:link
+                            beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                            event="viewDiaryBoard">
+                        ${index}
+                        <stripes:param name="page" value="${index}" />
+                    </stripes:link>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <c:if test="${actionBean.next}">
+            <stripes:link
+                    beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                    event="viewDiaryBoard">
+                next
+                <stripes:param name="page" value="${actionBean.page + 1}" />
+            </stripes:link>
+        </c:if>
+    </div>
+    <div>
+        <stripes:link class="Button"
+                      beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                      event="getNewDiaryForm">
+            Write Diary
+        </stripes:link>
+    </div>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

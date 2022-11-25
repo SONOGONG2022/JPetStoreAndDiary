@@ -1,75 +1,69 @@
-MyBatis JPetStore
-=================
+## ver 1.0.0 수정 내역
 
-[![Java CI](https://github.com/mybatis/jpetstore-6/actions/workflows/ci.yaml/badge.svg)](https://github.com/mybatis/jpetstore-6/actions/workflows/ci.yaml)
-[![Container Support](https://github.com/mybatis/jpetstore-6/actions/workflows/support.yaml/badge.svg)](https://github.com/mybatis/jpetstore-6/actions/workflows/support.yaml)
-[![Coverage Status](https://coveralls.io/repos/github/mybatis/jpetstore-6/badge.svg?branch=master)](https://coveralls.io/github/mybatis/jpetstore-6?branch=master)
-[![License](https://img.shields.io/:license-apache-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+1. 페이징 처리
+    + DiaryActionBean에 변수 및 메소드가 추가되었습니다.
+      ```
+        class DiaryActionBean {
+          //paging 처리
+          private int totalCount;
+          private int beginPage;
+          private int endPage;
+          private boolean next;
+          private boolean prev;    
+          ...
+      
+          public void paging() {
+            //Diary 총 갯수를 가져와서 몇개의 페이지를 표시할지 나타낸다
+            totalCount = diaryService.getDiaryCount();
+            endPage = ((int)Math.ceil(page / (double)10)) * 10;
 
-![mybatis-jpetstore](https://mybatis.org/images/mybatis-logo.png)
+            beginPage = endPage - (10 - 1);
 
-JPetStore 6 is a full web application built on top of MyBatis 3, Spring 5 and Stripes.
+            int totalPage = (int)Math.ceil(totalCount / (double)6);
 
-Essentials
-----------
-
-* [See the docs](http://www.mybatis.org/jpetstore-6)
-
-## Other versions that you may want to know about
-
-- JPetstore on top of Spring, Spring MVC, MyBatis 3, and Spring Security https://github.com/making/spring-jpetstore
-- JPetstore with Vaadin and Spring Boot with Java Config https://github.com/igor-baiborodine/jpetstore-6-vaadin-spring-boot
-- JPetstore on MyBatis Spring Boot Starter https://github.com/kazuki43zoo/mybatis-spring-boot-jpetstore
-
-## Run on Application Server
-Running JPetStore sample under Tomcat (using the [cargo-maven2-plugin](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html)).
-
-- Clone this repository
-
-  ```
-  $ git clone https://github.com/mybatis/jpetstore-6.git
-  ```
-
-- Build war file
-
-  ```
-  $ cd jpetstore-6
-  $ ./mvnw clean package
-  ```
-
-- Startup the Tomcat server and deploy web application
-
-  ```
-  $ ./mvnw cargo:run -P tomcat90
-  ```
-
-  > Note:
-  >
-  > We provide maven profiles per application server as follow:
-  >
-  > | Profile        | Description |
-  > | -------------- | ----------- |
-  > | tomcat90       | Running under the Tomcat 9.0 |
-  > | tomcat85       | Running under the Tomcat 8.5 |
-  > | tomee80        | Running under the TomEE 8.0(Java EE 8) |
-  > | tomee71        | Running under the TomEE 7.1(Java EE 7) |
-  > | wildfly26      | Running under the WildFly 26(Java EE 8) |
-  > | wildfly13      | Running under the WildFly 13(Java EE 7) |
-  > | liberty-ee8    | Running under the WebSphere Liberty(Java EE 8) |
-  > | liberty-ee7    | Running under the WebSphere Liberty(Java EE 7) |
-  > | jetty          | Running under the Jetty 9 |
-  > | glassfish5     | Running under the GlassFish 5(Java EE 8) |
-  > | glassfish4     | Running under the GlassFish 4(Java EE 7) |
-  > | resin          | Running under the Resin 4 |
-
-- Run application in browser http://localhost:8080/jpetstore/ 
-- Press Ctrl-C to stop the server.
+            if (totalPage < endPage) {
+              endPage = totalPage;
+            } else {
+              next = true;  
+            }
+            prev = beginPage!=1;
+        }
+        ```
+    + DiaryActionBean에서 viewDiary() 메소드가 실행될 때 자동으로 paging() 메소드가 실행됩니다.
+      ```
+      public ForwardResolution viewDiaryBoard(){
+        paging();
+        diaryList=diaryService.getDiaryList(page);
+        return new ForwardResolution(VIEW_PET_DIARY_BOARD);
+      }
+      ```
+    + DiaryService와 DiaryMapper에 getDiaryCount()메소드가 추가되었습니다. 해당 메소드는 작성된 Diary의 갯수를 반환합니다.
 
 
-## Try integration tests
+2. 파일 업로드
+   + pom.xml에 Dependency가 추가되었습니다.
+      ```
+     <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+      <dependency>
+         <groupId>commons-fileupload</groupId>
+         <artifactId>commons-fileupload</artifactId>
+         <version>1.4</version>
+      </dependency>
+     ```
+   + application.properties 에 static 경로(이미지 저장 경로)설정 부분이 추가됩니다.
+      ```
+      spring.mvc.static-path-pattern=/static/**
+      spring.resources.static-locations=classpath:/static/
+      spring.resources.add-mappings=true
+     ```
+   + DiaryActionBean 에 업로드된 이미지를 받을 FileBean 변수가 추가됩니다.
+   + insertDiary() 메소드에서 로그인을 확인합니다
+   + DiaryActionBean에 isAuthenticated() 로그인을 확인하는 메소드가 추가되었습니다.
+   + src/main/webapp/static 폴더에 업로드 된 이미지가 저장됩니다. 현재는 주석처리 되어있으며 테스트시에는 해당 폴더내의 default.png파일을 불러오도록 설정되어있습니다.
+   
+3.Diary 도메인 클래스의 수정
+   + setUserid(), setCategoryid(), setTitle(), setContent() 메소드는 insertDiary()할 때 꼭 필요한 항목들이므로 @Validate를 이용하여 꼭 세팅될 수 있도록 하였습니다.
+      + 추후 해당 내용과 관련하여 update할 때의 메소드 역시 on = {} 내부에 추가하도록 합니다.
 
-Perform integration tests for screen transition.
-
-```
-$ ./mvnw clean verify -P tomcat90
-```
+..그 외 자잘한 로직들이 조금씩 수정되었습니다.
+현재 가능한 기능은 insert와 getDiaryList입니다!

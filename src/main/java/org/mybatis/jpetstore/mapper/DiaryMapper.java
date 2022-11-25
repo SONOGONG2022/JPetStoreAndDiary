@@ -13,6 +13,8 @@ public interface DiaryMapper {
 
     void deleteDiary(int no);
 
+    int getDiaryCount();
+
     List<Diary> getDiaryList(int page);
 
     List<Diary> getAnotherDiaryList(Diary diary);

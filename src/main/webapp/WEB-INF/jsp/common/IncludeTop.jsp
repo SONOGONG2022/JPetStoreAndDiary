@@ -87,7 +87,14 @@
             My Account
 	      </stripes:link>
 	</c:if>
-</c:if> <img align="middle" src="../images/separator.gif" /> <a
+</c:if> <img align="middle" src="../images/separator.gif" />
+	<stripes:link
+		beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+		event="viewDiaryBoard">
+		<stripes:param name="page" value="1" />
+	Pet Diary
+</stripes:link>
+	<img align="middle" src="../images/separator.gif" /> <a
 	href="../help.html">?</a></div>
 </div>
 
