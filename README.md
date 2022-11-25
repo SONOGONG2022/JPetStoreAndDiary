@@ -72,3 +72,15 @@
 
 ..그 외 자잘한 로직들이 조금씩 수정되었습니다.
 현재 가능한 기능은 insert와 getDiaryList입니다! 상세 페이지를 만들고 나머지 기능 붙이는거 진행하겠습니다.
+
+ver 1.0.1
++ 게시판 정렬 기준에 따른 메소드들을 추가했습니다.
++ getDiaryListOrderByComments: 전체 카테고리 게시글 댓글순 정렬
++ getDiaryListOrderByLikes: 전체 카테고리 게시글 좋아요순 정렬
++ getCategoriedDiaryList: 선택된 카테고리 게시글
++ getCategoriedDiaryListOrderByComments: 선택된 카테고리 게시글 댓글순 정렬
++ getCategoriedDiaryListOrderByLikes: 선택된 카테고리 게시글 좋아요순 정렬
++ boardCategoryid 라는 액션빈 변수를 하나 더 만들었습니다. 
++ paging 메소드 실행될 때 boardCategoryid가 null이면 getDiaryCount 메소드를, 
+그렇지 않으면 getCategoriedDiaryCount를 사용하도록 하였습니다.
+

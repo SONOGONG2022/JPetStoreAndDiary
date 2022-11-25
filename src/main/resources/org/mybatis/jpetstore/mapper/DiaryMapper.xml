@@ -50,7 +50,46 @@
         order by no desc limit #{page}, 6;
     </select>
 
+    <select id="getDiaryListOrderByComments" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date,
+            (select count(*) from LIKES where d_no = no) as likes,
+            (select count(*) from COMMENTS where d_no = no) as comments from DIARY
+        order by comments desc limit #{page}, 6;
+    </select>
+
+    <select id="getDiaryListOrderByLikes" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date,
+            (select count(*) from LIKES where d_no = no) as likes,
+            (select count(*) from COMMENTS where d_no = no) as comments from DIARY
+        order by likes desc limit #{page}, 6;
+    </select>
+
+    <select id="getCategoriedDiaryList" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date,
+            (select count(*) from LIKES where d_no = no) as likes,
+            (select count(*) from COMMENTS where d_no = no) as comments from DIARY where categoryid = #{categoryid}
+        order by no desc limit #{page}, 6;
+    </select>
+
+    <select id="getCategoriedDiaryListOrderByComments" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date,
+            (select count(*) from LIKES where d_no = no) as likes,
+            (select count(*) from COMMENTS where d_no = no) as comments from DIARY where categoryid = #{categoryid}
+        order by comments desc limit #{page}, 6;
+    </select>
+
+    <select id="getCategoriedDiaryListOrderByLikes" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date,
+            (select count(*) from LIKES where d_no = no) as likes,
+            (select count(*) from COMMENTS where d_no = no) as comments from DIARY where categoryid = #{categoryid}
+        order by likes desc limit #{page}, 6;
+    </select>
+
     <select id="getDiaryCount" resultType="int">
         select count(*) from DIARY;
+    </select>
+
+    <select id="getCategoriedDiaryCount" resultType="int" parameterType="String">
+        select count(*) from DIARY where categoryid = #{categoryid};
     </select>
 </mapper>
