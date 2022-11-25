@@ -47,6 +47,18 @@
 		<servlet-name>StripesDispatcher</servlet-name>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+	<filter>
+		<filter-name>encoding-filter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding-filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<servlet>
 		<servlet-name>StripesDispatcher</servlet-name>
 		<servlet-class>net.sourceforge.stripes.controller.DispatcherServlet</servlet-class>

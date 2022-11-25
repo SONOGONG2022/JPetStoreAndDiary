@@ -16,6 +16,10 @@
 
 --%>
 <%@ include file="../common/IncludeTop.jsp"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("utf-8");
+%>
 
 <%--<div id="BackLink"><stripes:link--%>
 <%--        beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"--%>

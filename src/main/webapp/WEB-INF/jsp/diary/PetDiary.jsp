@@ -94,7 +94,7 @@
         <c:forEach var="diary" items="${actionBean.diaryList}">
             <div class="card-wrap">
                 <stripes:link class="thumbnail" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="detailDiary">
-                    <img src="http://localhost:8080/JPetStoreAndDiary_war/static/${diary.imgurl}" style="width:100%; height: 100%;">
+                    <img src="https://share.shbox.kr/jpetstore_war/static/${diary.imgurl}" style="width:100%; height: 100%;">
                 </stripes:link>
                 <div class="detail">
                     <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="detailDiary">

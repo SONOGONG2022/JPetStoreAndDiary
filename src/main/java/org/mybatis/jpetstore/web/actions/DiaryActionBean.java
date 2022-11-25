@@ -142,6 +142,7 @@ public class DiaryActionBean extends AbstractActionBean{
 //            setMessage("Image File Error");
 //            return new ForwardResolution(MAIN);
 //        }
+        System.out.println(diary.getTitle());
         diary.setImgurl("default.png");
         diaryService.insertDiary(diary);
         paging();
