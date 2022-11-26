@@ -17,9 +17,7 @@ package org.mybatis.jpetstore.web.actions;
 
 import java.util.List;
 
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.SessionScope;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import org.mybatis.jpetstore.domain.Category;
@@ -210,6 +208,15 @@ public class CatalogActionBean extends AbstractActionBean {
   public ForwardResolution viewAllProduct() {
     productList = catalogService.getProductList();
     return new ForwardResolution(VIEW_PRODUCT_LIST);
+  }
+
+  public ForwardResolution deleteItem(){
+    if(itemId!=null) {
+      catalogService.deleteItem(itemId);
+    }
+    itemId = null;
+    itemList = catalogService.getItemListByProduct(productId);
+    return new ForwardResolution(VIEW_ADMIN_PRODUCT);
   }
 
   /**

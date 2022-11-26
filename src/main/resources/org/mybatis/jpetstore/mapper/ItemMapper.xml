@@ -79,4 +79,9 @@
     WHERE ITEMID = #{itemId}
   </update>
 
+  <delete id="deleteItem">
+    delete from ITEM
+    where ITEMID = #{itemId}
+  </delete>
+
 </mapper>

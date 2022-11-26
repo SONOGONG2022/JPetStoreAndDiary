@@ -91,4 +91,8 @@ public class CatalogService {
   public List<Product> getProductList() {
     return productMapper.getProductList();
   }
+
+  public void deleteItem(String itemId){
+    itemMapper.deleteItem(itemId);
+  }
 }
