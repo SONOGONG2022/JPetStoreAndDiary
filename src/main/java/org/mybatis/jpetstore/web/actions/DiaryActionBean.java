@@ -51,6 +51,14 @@ public class DiaryActionBean extends AbstractActionBean{
     private boolean next;
     private boolean prev;
 
+    // 정렬 기준 가지고 있는 변수
+    private String orderCategory;
+    private String orderLikesOrComments;
+    public String getOrderCategory() {return orderCategory;}
+    public void setOrderCategory(String orderCategory) {this.orderCategory = orderCategory;}
+    public String getOrderLikesOrComments() {return orderLikesOrComments; }
+    public void setOrderLikesOrComments(String orderLikesOrComments) {this.orderLikesOrComments = orderLikesOrComments;}
+
     public boolean getNext() {
         return next;
     }
@@ -72,10 +80,7 @@ public class DiaryActionBean extends AbstractActionBean{
 
     // 작성한 덧글
     private Comments comments;
-
-    public Comments getComments() {
-        return comments;
-    }
+    public Comments getComments() {return comments;}
     public void setComments(Comments comments) {
         this.comments = comments;
     }
@@ -118,10 +123,6 @@ public class DiaryActionBean extends AbstractActionBean{
     public String getCategoryid(){return diary.getCategoryid();}
     public void setCategoryid(String categoryid){diary.setCategoryid(categoryid);}
 
-    private String boardCategoryid;//게시글의 카테고리가 아니라 양육일지 게시판의 카테고리
-    public String getBoardCategoryid(){return boardCategoryid;}
-    public void setBoardCategoryid(String boardCategoryid){this.boardCategoryid = boardCategoryid;}
-
     public ForwardResolution getDiaryContent(){
         diary=diaryService.getDiary(diary.getNo());
         commentsList = diaryService.getCommentsList(diary.getNo());
@@ -163,7 +164,8 @@ public class DiaryActionBean extends AbstractActionBean{
         diary.setImgurl("default.png");
         diaryService.insertDiary(diary);
         paging();
-        diaryList=diaryService.getDiaryList(0);
+        orderLikesOrComments = "likes";
+        diaryList=diaryService.getDiaryList(orderLikesOrComments, 0);
         return new ForwardResolution(VIEW_PET_DIARY_BOARD);
     }
 
@@ -201,46 +203,23 @@ public class DiaryActionBean extends AbstractActionBean{
     public ForwardResolution viewDiaryBoard(){
         paging();
         int offset = (page - 1) * 6;
-        diaryList=diaryService.getDiaryList(offset);
-        return new ForwardResolution(VIEW_PET_DIARY_BOARD);
-    }
-    public ForwardResolution viewDiaryBoardOrderByComments(){//전체 카테고리 댓글순 정렬
-        paging();
-        int offset = (page - 1) * 6;
-        diaryList=diaryService.getDiaryListOrderByComments(offset);
-        return new ForwardResolution(VIEW_PET_DIARY_BOARD);
-    }
-    public ForwardResolution viewDiaryBoardOrderByLikes(){//전체 카테고리 좋아요순 정렬
-        paging();
-        int offset = (page - 1) * 6;
-        diaryList=diaryService.getDiaryListOrderByLikes(offset);
-        return new ForwardResolution(VIEW_PET_DIARY_BOARD);
-    }
-    public ForwardResolution viewCategoriedDiaryBoard(){//선택된 카테고리
-        paging();
-        int offset = (page - 1) * 6;
-        diaryList=diaryService.getCategoriedDiaryList(offset, boardCategoryid);
-        return new ForwardResolution(VIEW_PET_DIARY_BOARD);
-    }
-    public ForwardResolution viewCategoriedDiaryBoardOrderByComments(){//선택된 카테고리 댓글순 정렬
-        paging();
-        int offset = (page - 1) * 6;
-        diaryList=diaryService.getCategoriedDiaryListOrderByComments(offset, boardCategoryid);
-        return new ForwardResolution(VIEW_PET_DIARY_BOARD);
-    }
-    public ForwardResolution viewCategoriedDiaryBoardOrderByLikes(){//선택된 카테고리 좋아요순 정렬
-        paging();
-        int offset = (page - 1) * 6;
-        diaryList=diaryService.getCategoriedDiaryListOrderByLikes(offset, boardCategoryid);
+        if (orderLikesOrComments == null) {
+            orderLikesOrComments = "likes";
+        }
+        if (orderCategory == null || orderCategory.equals("ALL")) {
+            diaryList=diaryService.getDiaryList(orderLikesOrComments, offset);
+        } else {
+            diaryList=diaryService.getCategoriedDiaryList(offset, orderCategory, orderLikesOrComments);
+        }
         return new ForwardResolution(VIEW_PET_DIARY_BOARD);
     }
 
     public void paging() {
-        if(boardCategoryid==null){
+        if(orderCategory==null || orderCategory.equals("ALL")){
             totalCount = diaryService.getDiaryCount();
         }
         else{
-            totalCount = diaryService.getCategoriedDiaryCount(boardCategoryid);
+            totalCount = diaryService.getCategoriedDiaryCount(orderCategory);
         }
         endPage = ((int)Math.ceil(page / (double)10)) * 10;
 

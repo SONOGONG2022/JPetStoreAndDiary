@@ -16,21 +16,11 @@ public interface DiaryMapper {
 
     int getDiaryCount();
 
-    List<Diary> getDiaryList(int page);
-
-    List<Diary> getDiaryListOrderByComments(int page);
-
-    List<Diary> getDiaryListOrderByLikes(int page);
+    List<Diary> getDiaryList(String orderLikesOrComments, int page);
 
     int getCategoriedDiaryCount(String categoryid);
 
-    List<Diary> getCategoriedDiaryList(@Param("page") int page,@Param("categoryid") String categoryid);
-
-    List<Diary> getCategoriedDiaryListOrderByComments(@Param("page") int page,@Param("categoryid") String categoryid);
-
-    List<Diary> getCategoriedDiaryListOrderByLikes(@Param("page") int page,@Param("categoryid") String categoryid);
-
-
+    List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments);
 
     List<Diary> getAnotherDiaryList(Diary diary);
 }

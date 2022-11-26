@@ -94,8 +94,23 @@
 </details>
 
 ## ver 1.0.2 수정 내역 - ksh_1.0.2
+
+<details>
+<summary>수정 내역 보기</summary>
+<div markdown="1">
 ### 1. 다이어리 상세 조회 가능
 ### 2. 다이어리 수정 가능(내 게시글일 경우 수정 혹은 삭제 가능)
 ### 3. 좋아요 눌렀을 경우와 누르지 않았을 경우 구분
 ### 4. 덧글 불러오기 가능
+</div>
+</details>
+
+## ver 1.0.3 수정 내역 - ksh_1.0.3
+1. 정렬이 가능해졌습니다!!
+2. ![img.png](img.png) 원래 IncludeTop.jsp를 그대로 diary에 가져왔습니다. 하지만 해당 글자 클릭시 상품 페이지로 이동하는것이 아닌 다이어리가 해당 카테고리에 맞게 정렬되도록 합니다.
+3. ![img_1.png](img_1.png) 카테고리별 정렬과 별개로 기본적으로 "좋아요 높은 순"이 선택되도록 합니다. 다른 정렬기준으로 "덧글 많은 순"이 존재합니다.
+4. 원래 1.0.2에서 DiaryActionBean의 로직이 정렬마다 전부 메소드가 짜여져 있던 것을 단순화 하였습니다.
+   1. orderCategory = 정렬할 카테고리 { null, ALL, FISH, DOGS, REPTILES, CAT, BIRDS } 를 원소로 가질 수 있습니다.
+   2. orderLikesOrComments = 정렬 기준 { likes, comments } 를 원소로 가질 수 있습니다.
+   3. orderCategory == null or ALL 그리고 orderLikesOrComments == null 일 경우 전체를 좋아요 높은 순으로 정렬합니다.
 

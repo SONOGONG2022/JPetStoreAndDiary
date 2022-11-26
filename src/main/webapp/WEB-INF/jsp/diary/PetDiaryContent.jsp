@@ -15,7 +15,7 @@
        limitations under the License.
 
 --%>
-<%@ include file="../common/IncludeTop.jsp"%>
+<%@ include file="../diary/IncludeTop.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <%--<div id="BackLink"><stripes:link--%>

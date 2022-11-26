@@ -41,8 +41,8 @@ public class DiaryService {
     }
 
     //not used yet
-    public List<Diary> getDiaryList(int page){
-        return diaryMapper.getDiaryList(page);
+    public List<Diary> getDiaryList(String orderLikesOrComments, int page){
+        return diaryMapper.getDiaryList(orderLikesOrComments, page);
     }
 
     public List<Comments> getCommentsList(int d_no){
@@ -57,15 +57,7 @@ public class DiaryService {
         return diaryLikesMapper.didClickedLike(likes);
     }
 
-    public List<Diary> getDiaryListOrderByComments(int page){return diaryMapper.getDiaryListOrderByComments(page);}
-
-    public List<Diary> getDiaryListOrderByLikes(int page){return diaryMapper.getDiaryListOrderByLikes(page);}
-
     public int getCategoriedDiaryCount(String categoryid){return diaryMapper.getCategoriedDiaryCount(categoryid);}
 
-    public List<Diary> getCategoriedDiaryList(int page, String categoryid){return diaryMapper.getCategoriedDiaryList(page,categoryid);}
-
-    public List<Diary> getCategoriedDiaryListOrderByComments(int page, String categoryid){return  diaryMapper.getCategoriedDiaryListOrderByComments(page,categoryid);}
-
-    public List<Diary> getCategoriedDiaryListOrderByLikes(int page, String categoryid){return  diaryMapper.getCategoriedDiaryListOrderByLikes(page,categoryid);}
+    public List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments){return diaryMapper.getCategoriedDiaryList(page, categoryid, orderLikesOrComments);}
 }

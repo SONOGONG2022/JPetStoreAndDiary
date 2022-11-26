@@ -15,7 +15,7 @@
        limitations under the License.
 
 --%>
-<%@ include file="../common/IncludeTop.jsp"%>
+<%@ include file="../diary/IncludeTop.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <%--<div id="BackLink"><stripes:link--%>
@@ -90,6 +90,24 @@
 </style>
 
 <div id="Catalog">
+    <div class="order">
+        <span>정렬 기준 </span>
+        <c:forTokens var="order" items="likes,comments" delims=",">
+            <c:choose>
+                <c:when test="${actionBean.orderLikesOrComments==order}">
+                    ${order}
+                </c:when>
+                <c:otherwise>
+                    <stripes:link
+                            beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                            event="viewDiaryBoard">
+                        ${order}
+                        <stripes:param name="orderLikesOrComments" value="${order}" />
+                    </stripes:link>
+                </c:otherwise>
+            </c:choose>
+        </c:forTokens>
+    </div>
     <div class="diary-wrap">
         <c:forEach var="diary" items="${actionBean.diaryList}">
             <div class="card-wrap">
@@ -156,10 +174,10 @@
             </stripes:link>
         </c:if>
     </div>
-    <div>
+    <div style="margin-top: 20px; padding-top: 20px">
         <stripes:link class="Button"
                       beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                      event="getNewDiaryForm">
+                      event="getNewDiaryForm" >
             Write Diary
         </stripes:link>
     </div>
