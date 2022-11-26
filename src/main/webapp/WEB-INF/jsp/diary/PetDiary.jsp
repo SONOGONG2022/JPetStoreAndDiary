@@ -93,11 +93,13 @@
     <div class="diary-wrap">
         <c:forEach var="diary" items="${actionBean.diaryList}">
             <div class="card-wrap">
-                <stripes:link class="thumbnail" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="detailDiary">
+                <stripes:link class="thumbnail" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
+                    <stripes:param name="diary.no" value="${diary.no}" />
                     <img src="https://share.shbox.kr/jpetstore_war/static/${diary.imgurl}" style="width:100%; height: 100%;">
                 </stripes:link>
                 <div class="detail">
-                    <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="detailDiary">
+                    <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
+                        <stripes:param name="diary.no" value="${diary.no}" />
                         <h4>${diary.title}</h4>
                     </stripes:link>
                 </div>
