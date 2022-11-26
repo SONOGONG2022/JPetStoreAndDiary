@@ -24,7 +24,7 @@
     <cache />
 
     <select id="getDiaryContent" resultType="Diary">
-        select imgurl, title, categoryid, userid, date, content,
+        select no, imgurl, title, categoryid, userid, date, content,
           (select count(*) from LIKES where d_no = no) as likes,
           (select count(*) from COMMENTS where d_no= no) as comments
         from DIARY where no = #{no};

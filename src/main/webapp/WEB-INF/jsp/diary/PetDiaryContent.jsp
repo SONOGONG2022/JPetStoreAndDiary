@@ -75,11 +75,13 @@
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="getEditDiaryForm">
+                        <stripes:param name="diary.no" value="${actionBean.diary.no}" />
                         Edit
                     </stripes:link>
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="deleteDiary">
+                        <stripes:param name="diary.no" value="${actionBean.diary.no}" />
                         Delete
                     </stripes:link>
                 </c:if>
@@ -94,6 +96,20 @@
         <div class="comments-wrap">
             <h4>${actionBean.diary.comments} 개의 덧글</h4>
             <h4>${actionBean.diary.likes} 좋아요</h4>
+            <c:if test="${actionBean.clickedLike == 1}">
+                <stripes:link class="Button"
+                              beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                              event="deleteLike">
+                    좋아요 취소
+                </stripes:link>
+            </c:if>
+            <c:if test="${actionBean.clickedLike == 0}">
+                <stripes:link class="Button"
+                              beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                              event="addLike">
+                    좋아요
+                </stripes:link>
+            </c:if>
             <div class="comments">
                 <div>
                     <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
@@ -115,6 +131,18 @@
                         <div>
                             ${comments.comment}
                         </div>
+                        <c:if test="${comments.userid == sessionScope.accountBean.account.username}">
+                            <stripes:link
+                                    beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                                    event="getEditCommentsForm">
+                                Edit
+                            </stripes:link>
+                            <stripes:link
+                                    beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                                    event="deleteComment">
+                                Delete
+                            </stripes:link>
+                        </c:if>
                     </div>
                 </c:forEach>
             </div>

@@ -1,8 +1,6 @@
 package org.mybatis.jpetstore.web.actions;
 
-import net.sourceforge.stripes.action.FileBean;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.SessionScope;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Comments;
 import org.mybatis.jpetstore.domain.Diary;
@@ -72,6 +70,16 @@ public class DiaryActionBean extends AbstractActionBean{
     public void setClickedLike(int clickedLike){this.clickedLike=clickedLike;}
     public int getClickedLike(){return clickedLike;}
 
+    // 작성한 덧글
+    private Comments comments;
+
+    public Comments getComments() {
+        return comments;
+    }
+    public void setComments(Comments comments) {
+        this.comments = comments;
+    }
+
     //my userid
     private String myUserid;
     public String getMyUserid(){return myUserid;}
@@ -112,15 +120,20 @@ public class DiaryActionBean extends AbstractActionBean{
     public ForwardResolution getDiaryContent(){
         diary=diaryService.getDiary(diary.getNo());
         commentsList = diaryService.getCommentsList(diary.getNo());
-        if(myUserid!=null){
+        clickedLike = 0;
+        if(isAuthenticated() && isMyDiaryOrComments(diary.getUserid())) {
+            likes = new Likes();
             likes.setUserid(myUserid);
             likes.setD_no(diary.getNo());
+            System.out.println(clickedLike);
             clickedLike= diaryService.didClickedLike(likes);
         }
         return new ForwardResolution(VIEW_DIARY_CONTENT);
     }
 
     public ForwardResolution getEditDiaryForm(){
+        if (!isAuthenticated() && !isMyDiaryOrComments(diary.getUserid()))
+            return new ForwardResolution(MAIN);
         diary=diaryService.getDiary(diary.getNo());
         return new ForwardResolution(VIEW_EDIT_DIARY_FORM);
     }
@@ -150,6 +163,8 @@ public class DiaryActionBean extends AbstractActionBean{
     }
 
     public ForwardResolution updateDiary(){
+        if (!isAuthenticated() && !isMyDiaryOrComments(diary.getUserid()))
+            return new ForwardResolution(MAIN);
         //테스트할 때는 톰캣이 종료 및 실행될때마다 정적 리소스가 초기화 되기 때문에, diary.imgurl = "default.png"로 다 넣으시면 됩니다
 //        try {
 //            fileUpload();
@@ -169,7 +184,9 @@ public class DiaryActionBean extends AbstractActionBean{
         return new ForwardResolution(VIEW_DIARY_CONTENT);
     }
 
-    public ForwardResolution deleteDiary(){
+    public Resolution deleteDiary(){
+        if (!isAuthenticated() && !isMyDiaryOrComments(diary.getUserid()))
+            return new ForwardResolution(MAIN);
         diaryService.deleteDiary(diary.getNo());
         return new ForwardResolution(MAIN);
         //return goMain();
@@ -228,13 +245,23 @@ public class DiaryActionBean extends AbstractActionBean{
         HttpSession session = context.getRequest().getSession();
         AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
         if (accountBean == null || !accountBean.isAuthenticated()) {
-            setMessage("You must sign on before attempting to check out.  Please sign on and try checking out again.");
+            //setMessage("You must sign on before attempting to check out.  Please sign on and try checking out again.");
             return false;
         } else if (accountBean.isAuthenticated()) {
+            myUserid = accountBean.getAccount().getUsername();
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean isMyDiaryOrComments(String userid) {
+        if (myUserid == null)
+            return false;
+        else if (myUserid.equals(userid))
+            return true;
+        else
+            return false;
     }
 
     public ForwardResolution goMain(){
