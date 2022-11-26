@@ -115,6 +115,7 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newAccount() {
+    account.setRole(0);
     accountService.insertAccount(account);
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
