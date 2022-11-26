@@ -60,4 +60,25 @@ public class DiaryService {
     public int getCategoriedDiaryCount(String categoryid){return diaryMapper.getCategoriedDiaryCount(categoryid);}
 
     public List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments){return diaryMapper.getCategoriedDiaryList(page, categoryid, orderLikesOrComments);}
+
+    @Transactional
+    public void insertComment(Comments comments){
+        diaryCommentsMapper.insertComment(comments);
+    }
+    @Transactional
+    public void updateComment(Comments comments){
+        diaryCommentsMapper.updateComment(comments);
+    }
+    @Transactional
+    public void deleteComment(int c_no){
+        diaryCommentsMapper.deleteComment(c_no);
+    }
+    @Transactional
+    public void insertLike(Likes likes){
+        diaryLikesMapper.insertLike(likes);
+    }
+    @Transactional
+    public void deleteLike(Likes likes){
+        diaryLikesMapper.deleteLike(likes);
+    }
 }

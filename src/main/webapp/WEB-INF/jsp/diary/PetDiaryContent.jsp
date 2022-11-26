@@ -106,7 +106,7 @@
             <c:if test="${actionBean.clickedLike == 0}">
                 <stripes:link class="Button"
                               beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                              event="addLike">
+                              event="insertLike">
                     좋아요
                 </stripes:link>
             </c:if>

@@ -27,4 +27,12 @@
         select EXISTS (select * from LIKES where d_no = #{d_no} and userid = #{userid}) as success;
     </select>
 
+    <insert id="insertLike" parameterType="Likes">
+        insert into LIKES (d_no, userid) VALUES (#{d_no}, #{userid});
+    </insert>
+    
+    <delete id="deleteLike" parameterType="Likes">
+        delete from LIKES where d_no = #{d_no} AND userid=#{userid};
+    </delete>
+
 </mapper>

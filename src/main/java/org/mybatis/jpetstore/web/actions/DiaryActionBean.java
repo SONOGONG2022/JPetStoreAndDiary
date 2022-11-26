@@ -286,4 +286,36 @@ public class DiaryActionBean extends AbstractActionBean{
         return new ForwardResolution(MAIN);
     }
 
+    public ForwardResolution insertLike(){
+        likes = new Likes();
+        likes.setUserid(myUserid);
+        likes.setD_no(diary.getNo());
+        diaryService.insertLike(likes);
+        return getDiaryContent();
+    }
+    public ForwardResolution deleteLike(){
+        likes = new Likes();
+        likes.setUserid(myUserid);
+        likes.setD_no(diary.getNo());
+        diaryService.deleteLike(likes);
+        return getDiaryContent();
+    }
+
+    public ForwardResolution insertComment(){
+        comments.setUserid(myUserid);
+        comments.setD_no(diary.getNo());
+        diaryService.insertComment(comments);
+        return getDiaryContent();
+    }
+    public ForwardResolution updateComment(){
+        comments.setUserid(myUserid);
+        comments.setD_no(diary.getNo());
+        diaryService.updateComment(comments);
+        return getDiaryContent();
+    }
+    public ForwardResolution deleteComment(){
+        diaryService.deleteComment(comments.getC_no());
+        return getDiaryContent();
+    }
+
 }
