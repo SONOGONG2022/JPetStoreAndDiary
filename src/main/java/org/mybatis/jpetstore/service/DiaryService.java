@@ -68,4 +68,25 @@ public class DiaryService {
     public List<Diary> getCategoriedDiaryListOrderByComments(int page, String categoryid){return  diaryMapper.getCategoriedDiaryListOrderByComments(page,categoryid);}
 
     public List<Diary> getCategoriedDiaryListOrderByLikes(int page, String categoryid){return  diaryMapper.getCategoriedDiaryListOrderByLikes(page,categoryid);}
+
+    @Transactional
+    public void insertComment(Comments comments){
+        diaryCommentsMapper.insertComment(comments);
+    }
+    @Transactional
+    public void updateComment(Comments comments){
+        diaryCommentsMapper.updateComment(comments);
+    }
+    @Transactional
+    public void deleteComment(int c_no){
+        diaryCommentsMapper.deleteComment(c_no);
+    }
+    @Transactional
+    public void insertLike(Likes likes){
+        diaryLikesMapper.insertLike(likes);
+    }
+    @Transactional
+    public void deleteLike(Likes likes){
+        diaryLikesMapper.deleteLike(likes);
+    }
 }

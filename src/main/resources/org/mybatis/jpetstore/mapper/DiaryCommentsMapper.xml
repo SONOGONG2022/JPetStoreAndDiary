@@ -27,4 +27,16 @@
         select c_no, d_no, userid, comment, date from COMMENTS where d_no = #{d_no};
     </select>
 
+    <insert id="insertComment" parameterType="Comments">
+        insert into COMMENTS (d_no, userid, comment) VALUES (#{d_no}, #{userid}, #{comment});
+    </insert>
+
+    <update id="updateComment" parameterType="Comments">
+        update COMMENTS set comment = #{comment} where c_no = #{c_no};
+    </update>
+
+    <delete id="deleteComment" parameterType="int">
+        delete from COMMENTS where c_no = #{c_no};
+    </delete>
+
 </mapper>
