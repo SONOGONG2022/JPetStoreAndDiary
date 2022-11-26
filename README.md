@@ -77,8 +77,25 @@
 </div>
 </details>
 
-## ver 1.0.1 수정 내역
+## ver 1.0.1 수정 내역 - cji_1.0.1
+<details>
+<summary>수정 내역 보기</summary>
+<div markdown="1">
++ 게시판 정렬 기준에 따른 메소드들을 추가했습니다.
++ getDiaryListOrderByComments: 전체 카테고리 게시글 댓글순 정렬
++ getDiaryListOrderByLikes: 전체 카테고리 게시글 좋아요순 정렬
++ getCategoriedDiaryList: 선택된 카테고리 게시글
++ getCategoriedDiaryListOrderByComments: 선택된 카테고리 게시글 댓글순 정렬
++ getCategoriedDiaryListOrderByLikes: 선택된 카테고리 게시글 좋아요순 정렬
++ boardCategoryid 라는 액션빈 변수를 하나 더 만들었습니다. 
++ paging 메소드 실행될 때 boardCategoryid가 null이면 getDiaryCount 메소드를, 
+그렇지 않으면 getCategoriedDiaryCount를 사용하도록 하였습니다.
+</div>
+</details>
+
+## ver 1.0.2 수정 내역 - ksh_1.0.2
 ### 1. 다이어리 상세 조회 가능
 ### 2. 다이어리 수정 가능(내 게시글일 경우 수정 혹은 삭제 가능)
 ### 3. 좋아요 눌렀을 경우와 누르지 않았을 경우 구분
 ### 4. 덧글 불러오기 가능
+

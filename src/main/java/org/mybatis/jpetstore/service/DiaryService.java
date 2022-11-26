@@ -56,4 +56,16 @@ public class DiaryService {
     public int didClickedLike(Likes likes){
         return diaryLikesMapper.didClickedLike(likes);
     }
+
+    public List<Diary> getDiaryListOrderByComments(int page){return diaryMapper.getDiaryListOrderByComments(page);}
+
+    public List<Diary> getDiaryListOrderByLikes(int page){return diaryMapper.getDiaryListOrderByLikes(page);}
+
+    public int getCategoriedDiaryCount(String categoryid){return diaryMapper.getCategoriedDiaryCount(categoryid);}
+
+    public List<Diary> getCategoriedDiaryList(int page, String categoryid){return diaryMapper.getCategoriedDiaryList(page,categoryid);}
+
+    public List<Diary> getCategoriedDiaryListOrderByComments(int page, String categoryid){return  diaryMapper.getCategoriedDiaryListOrderByComments(page,categoryid);}
+
+    public List<Diary> getCategoriedDiaryListOrderByLikes(int page, String categoryid){return  diaryMapper.getCategoriedDiaryListOrderByLikes(page,categoryid);}
 }
