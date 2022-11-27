@@ -211,10 +211,10 @@ public class CatalogActionBean extends AbstractActionBean {
   }
 
   public ForwardResolution deleteItem(){
-    if(itemId!=null) {
+    if(itemId != null) {
       catalogService.deleteItem(itemId);
+      itemId = null;
     }
-    itemId = null;
     itemList = catalogService.getItemListByProduct(productId);
     return new ForwardResolution(VIEW_ADMIN_PRODUCT);
   }
