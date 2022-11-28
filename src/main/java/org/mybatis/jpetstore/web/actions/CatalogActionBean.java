@@ -226,6 +226,9 @@ public class CatalogActionBean extends AbstractActionBean {
   }
 
   public Resolution addItem() {
+    item.setItemId(itemId);
+   // item.setProductId(productId);
+   // item.setProduct(product);
     catalogService.addItem(item);
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
