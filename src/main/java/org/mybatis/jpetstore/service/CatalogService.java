@@ -94,6 +94,7 @@ public class CatalogService {
 
   public void deleteItem(String itemId){
     itemMapper.deleteItem(itemId);
+    itemMapper.deleteInventory(itemId);
   }
 
   public void addItem(Item item) {

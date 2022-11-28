@@ -84,6 +84,11 @@
     where ITEMID = #{itemId}
   </delete>
 
+  <delete id="deleteInventory">
+    delete from INVENTORY
+    where ITEMID = #{itemId}
+  </delete>
+
   <insert id="addItem" parameterType="Item">
     INSERT INTO ITEM
       (ITEMID , PRODUCTID, ATTR1, LISTPRICE)
