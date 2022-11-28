@@ -84,4 +84,17 @@
     where ITEMID = #{itemId}
   </delete>
 
+  <insert id="addItem" parameterType="Item">
+    INSERT INTO ITEM
+      (ITEMID , PRODUCTID, ATTR1, LISTPRICE)
+    VALUES
+      (#{itemId}, #{productId}, #{attribute1}, #{listPrice})
+  </insert>
+
+  <insert id="addInventory" parameterType="Item">
+    INSERT INTO INVENTORY
+      (ITEMID, QTY)
+    VALUES
+      (#{itemId}, #{quantity})
+  </insert>
 </mapper>

@@ -71,7 +71,7 @@
     </table>
 <div><stripes:link class="Button"
                    beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-                   event="addItem">
+                   event="addItemForm">
     <stripes:param name="productId" value="${actionBean.productId}" />
     ADD
 </stripes:link></div>
