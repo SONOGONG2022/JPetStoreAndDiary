@@ -112,14 +112,28 @@
         <p style="color:gray;">'${actionBean.diary.userid}'의 다른 글</p>
         <br>
         <c:forEach var="diary" items="${actionBean.diaryListByUserid}">
+
             <div class="detail">
                 <table id="detail-table" class="detail-table">
-                    <td style="width: 500px; color:gray";><stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
-                        <stripes:param name="diary.no" value="${diary.no}" />
-                        <h5 style="color:#666666;  display:inline">${diary.title}</h5>
-                        <h6 style="color:mediumblue; display:inline">(댓글:${diary.comments}&nbsp 좋아요:${diary.likes})</h6>
-                    </stripes:link></td>
-                    <td style="width: 200px; color:gray; font-size:12px; text-align: right"; >${diary.date}</td>
+                    <td style="width: 500px; color:gray";>
+                        <c:choose>
+                            <c:when test ="${diary.no == actionBean.diary.no}">
+                                <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
+                                <stripes:param name="diary.no" value="${diary.no}" />
+                                <h5 style="color:black; display:inline">${diary.title}</h5>
+                                <h6 style="color:mediumblue; display:inline">(댓글:${diary.comments}&nbsp 좋아요:${diary.likes})</h6>
+                                </stripes:link></td>
+                                <td style="width: 200px; color:black; font-size:12px; font-weight: bold; text-align: right"; >${diary.date}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
+                                <stripes:param name="diary.no" value="${diary.no}" />
+                                <h5 style="color:dimgray;  display:inline">${diary.title}</h5>
+                                <h6 style="color:royalblue; display:inline">(댓글:${diary.comments}&nbsp 좋아요:${diary.likes})</h6>
+                                </stripes:link></td>
+                                <td style="width: 200px; color:gray; font-size:12px; text-align: right;">${diary.date}</td>
+                            </c:otherwise>
+                    </c:choose>
                 </table>
             </div>
         </c:forEach>
