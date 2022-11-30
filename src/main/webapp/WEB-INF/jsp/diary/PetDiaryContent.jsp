@@ -98,9 +98,64 @@
         text-align: left;
         font-size: 25px;
     }
+
+    th, td {
+        background-color: white;
+        border-bottom: 1px solid gray;
+        padding: 3px;
+    }
+
 </style>
 
 <div id="Catalog">
+    <div style="padding:120px 10px 10px 10px;">
+        <c:forEach var="diary" items="${actionBean.diaryListByUserid}">
+            <div class="detail">
+                <table id="detail-table" class="detail-table">
+                    <td style="width: 500px; color:gray";><stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
+                        <stripes:param name="diary.no" value="${diary.no}" />
+                        <h4 style="color:#444444; display:inline">${diary.title}</h4> <h6 style="color:red; display:inline">(${diary.comments})</h6>
+                    </stripes:link></td>
+                    <td style="width: 200px; color:gray; font-size:12px; text-align: right"; >${diary.date}</td>
+                </table>
+            </div>
+        </c:forEach>
+    </div>
+    <div>
+        <div>
+            <c:if test="${actionBean.prev2}">
+                <stripes:link style="color:gray;"
+                              beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                              event="getDiaryContent">
+                    prev
+                    <stripes:param name="page2" value="${actionBean.page2 - 1}" />
+                </stripes:link>
+            </c:if>
+            <c:forEach begin="${actionBean.beginPage2}" end="${actionBean.endPage2}" step="1" var="index">
+                <c:choose>
+                    <c:when test="${actionBean.page2==index}">
+                        ${index}
+                    </c:when>
+                    <c:otherwise>
+                        <stripes:link style="color:gray;"
+                                      beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                                      event="getDiaryContent">
+                            ${index}
+                            <stripes:param name="page2" value="${index}" />
+                        </stripes:link>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <c:if test="${actionBean.next2}">
+                <stripes:link style="color:gray;"
+                              beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                              event="getDiaryContent">
+                    next
+                    <stripes:param name="page2" value="${actionBean.page2 + 1}" />
+                </stripes:link>
+            </c:if>
+        </div>
+    </div>
     <div class="diary-wrap">
         <div class="head-wrap">
             <br><br>
@@ -113,7 +168,7 @@
 
 
             <div class="writer-info">
-            <c:if test="${actionBean.diary.userid == sessionScope.accountBean.account.username}">
+                <c:if test="${actionBean.diary.userid == sessionScope.accountBean.account.username}">
                 <span style="margin-left: 88.8%; font-size: 15px; border-radius:15px; padding: 4px; background-color: #aaaaaa">
                         <stripes:link
                                 beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
@@ -121,7 +176,7 @@
                             &nbsp;&nbsp;새 글 작성&nbsp;&nbsp;
                         </stripes:link>
                 </span>
-            </c:if>
+                </c:if>
             </div>
 
             <div class="writer-info">
@@ -151,58 +206,7 @@
                 </c:if>
             </div>
             &nbsp;<br>
-            <div>
-                <c:forEach var="diary" items="${actionBean.diaryListByUserid}">
-                    <div class="detail">
-                        <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
-                            <stripes:param name="diary.no" value="${diary.no}" />
-                            <h4>${diary.title}</h4>
-                        </stripes:link>
-                    </div>
-                    <div class="sub-info">
-                        <span class="sub-sep">.</span>
-                        <span>${diary.date}</span>
-                        <span class="sub-sep">.</span>
-                        <span>댓글 수: ${diary.comments}</span>
-                        <span>좋아요 수: ${diary.likes}</span>
-                    </div>
-                </c:forEach>
-            </div>
-            <div>
-                <div>
-                    <c:if test="${actionBean.prev2}">
-                        <stripes:link
-                                beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                                event="getDiaryContent">
-                            prev
-                            <stripes:param name="page2" value="${actionBean.page2 - 1}" />
-                        </stripes:link>
-                    </c:if>
-                    <c:forEach begin="${actionBean.beginPage2}" end="${actionBean.endPage2}" step="1" var="index">
-                        <c:choose>
-                            <c:when test="${actionBean.page2==index}">
-                                ${index}
-                            </c:when>
-                            <c:otherwise>
-                                <stripes:link
-                                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                                        event="getDiaryContent">
-                                    ${index}
-                                    <stripes:param name="page2" value="${index}" />
-                                </stripes:link>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${actionBean.next2}">
-                        <stripes:link
-                                beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                                event="getDiaryContent">
-                            next
-                            <stripes:param name="page2" value="${actionBean.page2 + 1}" />
-                        </stripes:link>
-                    </c:if>
-                </div>
-            </div>
+
             <div class="image-wrap">
                 <img src="https://share.shbox.kr/jpetstore_war/static/${actionBean.diary.imgurl}" style="border-radius: 10px;" />
             </div>
@@ -231,11 +235,11 @@
         <br><br>
         <div class="comments-wrap">
             <div class="comments-title">
-            <span class="comments-content"><b>${actionBean.diary.comments} 개의 덧글</b></span>
+                <span class="comments-content"><b>${actionBean.diary.comments} 개의 덧글</b></span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="comments-content"><b>${actionBean.diary.likes} 개의 좋아요</b></span>
-            <c:if test="${sessionScope.accountBean != null}">
-                <c:if test="${actionBean.clickedLike == 1}">
+                <span class="comments-content"><b>${actionBean.diary.likes} 개의 좋아요</b></span>
+                <c:if test="${sessionScope.accountBean != null}">
+                    <c:if test="${actionBean.clickedLike == 1}">
                     <span>
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
@@ -243,8 +247,8 @@
                         💔
                     </stripes:link>
                     </span>
-                </c:if>
-                <c:if test="${actionBean.clickedLike == 0}">
+                    </c:if>
+                    <c:if test="${actionBean.clickedLike == 0}">
                     <span>
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
@@ -252,8 +256,8 @@
                         💕
                     </stripes:link>
                     </span>
+                    </c:if>
                 </c:if>
-            </c:if>
             </div>
 
             <br>
@@ -266,7 +270,7 @@
                         </div>
 
                         <div class="comments-content">
-                            ${comments.comment}
+                                ${comments.comment}
                         </div>
                         <c:if test="${comments.userid == sessionScope.accountBean.account.username}">
                             <span style="margin-left: 87%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa">
