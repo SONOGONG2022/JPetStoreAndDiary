@@ -109,12 +109,15 @@
 
 <div id="Catalog">
     <div style="padding:120px 10px 10px 10px;">
+        <p style="color:gray;">'${actionBean.diary.userid}'의 다른 글</p>
+        <br>
         <c:forEach var="diary" items="${actionBean.diaryListByUserid}">
             <div class="detail">
                 <table id="detail-table" class="detail-table">
                     <td style="width: 500px; color:gray";><stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
                         <stripes:param name="diary.no" value="${diary.no}" />
-                        <h4 style="color:#444444; display:inline">${diary.title}</h4> <h6 style="color:red; display:inline">(${diary.comments})</h6>
+                        <h5 style="color:#666666;  display:inline">${diary.title}</h5>
+                        <h6 style="color:mediumblue; display:inline">(댓글:${diary.comments}&nbsp 좋아요:${diary.likes})</h6>
                     </stripes:link></td>
                     <td style="width: 200px; color:gray; font-size:12px; text-align: right"; >${diary.date}</td>
                 </table>
