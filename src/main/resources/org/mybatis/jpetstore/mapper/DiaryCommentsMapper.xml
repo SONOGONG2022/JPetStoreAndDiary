@@ -35,8 +35,11 @@
         update COMMENTS set comment = #{comment} where c_no = #{c_no};
     </update>
 
-    <delete id="deleteComment" parameterType="int">
+    <delete id="deleteComment" parameterType="Comments">
         delete from COMMENTS where c_no = #{c_no};
     </delete>
 
+    <select id="getCommentsCount" parameterType="int" resultType="int">
+        select count(*) from COMMENTS where d_no = #{no};
+    </select>
 </mapper>

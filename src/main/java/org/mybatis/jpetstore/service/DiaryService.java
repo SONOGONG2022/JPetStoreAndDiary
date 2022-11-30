@@ -64,21 +64,29 @@ public class DiaryService {
     @Transactional
     public void insertComment(Comments comments){
         diaryCommentsMapper.insertComment(comments);
+        int commentsCnt = diaryCommentsMapper.getCommentsCount(comments.getD_no());
+        diaryMapper.updateDiaryComments(comments.getD_no(), commentsCnt);
     }
     @Transactional
     public void updateComment(Comments comments){
         diaryCommentsMapper.updateComment(comments);
     }
     @Transactional
-    public void deleteComment(int c_no){
-        diaryCommentsMapper.deleteComment(c_no);
+    public void deleteComment(Comments comments){
+        diaryCommentsMapper.deleteComment(comments);
+        int commentsCnt = diaryCommentsMapper.getCommentsCount(comments.getD_no());
+        diaryMapper.updateDiaryComments(comments.getD_no(), commentsCnt);
     }
     @Transactional
     public void insertLike(Likes likes){
         diaryLikesMapper.insertLike(likes);
+        int likesCnt = diaryLikesMapper.getLikesCount(likes.getD_no());
+        diaryMapper.updateDiaryLikes(likes.getD_no(), likesCnt);
     }
     @Transactional
     public void deleteLike(Likes likes){
         diaryLikesMapper.deleteLike(likes);
+        int likesCnt = diaryLikesMapper.getLikesCount(likes.getD_no());
+        diaryMapper.updateDiaryLikes(likes.getD_no(), likesCnt);
     }
 }

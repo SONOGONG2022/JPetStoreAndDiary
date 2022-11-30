@@ -24,9 +24,7 @@
     <cache />
 
     <select id="getDiaryContent" resultType="Diary">
-        select no, imgurl, title, categoryid, userid, date, content,
-          (select count(*) from LIKES where d_no = no) as likes,
-          (select count(*) from COMMENTS where d_no= no) as comments
+        select no, imgurl, title, categoryid, userid, date, content,likes, comments
         from DIARY where no = #{no};
     </select>
 
@@ -44,16 +42,14 @@
     </delete>
 
     <select id="getDiaryList" resultType="Diary">
-        select no, imgurl, title, categoryid, userid, date,
-          (select count(*) from LIKES where d_no = no) as likes,
-          (select count(*) from COMMENTS where d_no = no) as comments from DIARY
+        select no, imgurl, title, categoryid, userid, date, likes, comments
+        from DIARY
         order by ${param1} desc limit #{param2}, 6;
     </select>
 
     <select id="getCategoriedDiaryList" resultType="Diary">
-        select no, imgurl, title, categoryid, userid, date,
-            (select count(*) from LIKES where d_no = no) as likes,
-            (select count(*) from COMMENTS where d_no = no) as comments from DIARY where categoryid = #{param2}
+        select no, imgurl, title, categoryid, userid, date, likes, comments
+        from DIARY where categoryid = #{param2}
         order by ${param3} desc limit #{param1}, 6;
     </select>
 
@@ -64,4 +60,12 @@
     <select id="getCategoriedDiaryCount" resultType="int" parameterType="String">
         select count(*) from DIARY where categoryid = #{categoryid};
     </select>
+
+    <update id="updateDiaryLikes" parameterType="int">
+        update DIARY set likes = #{param2} where no = #{param1};
+    </update>
+
+    <update id="updateDiaryComments" parameterType="int">
+        update DIARY set comments = #{param2} where no = #{param1};
+    </update>
 </mapper>

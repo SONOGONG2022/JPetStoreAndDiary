@@ -35,4 +35,8 @@
         delete from LIKES where d_no = #{d_no} AND userid=#{userid};
     </delete>
 
+    <select id="getLikesCount" parameterType="int" resultType="int">
+        select count(*) from LIKES where d_no = #{no};
+    </select>
+
 </mapper>

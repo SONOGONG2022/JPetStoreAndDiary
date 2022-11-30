@@ -33,10 +33,6 @@ public class DiaryActionBean extends AbstractActionBean{
     private static final String MAIN="/WEB-INF/jsp/catalog/Main.jsp";
 
     //diary no
-    //private int no;
-    //public void setNo(int no){this.no=no;}
-    //public int getNo(){return no;}
-    //diary board page
     private int page;
 
     // 업로드된 이미지
@@ -54,10 +50,17 @@ public class DiaryActionBean extends AbstractActionBean{
     private int endPage;
     private boolean next;
     private boolean prev;
-
+    private Likes likes;
+    private int clickedLike;
     // 정렬 기준 가지고 있는 변수
     private String orderCategory;
     private String orderLikesOrComments;
+    private Diary diary;
+    private List<Diary> diaryList;
+    private String myUserid;
+    // 작성한 덧글
+    private Comments comments;
+    private List<Comments> commentsList;
     public String getOrderCategory() {return orderCategory;}
     public void setOrderCategory(String orderCategory) {this.orderCategory = orderCategory;}
     public String getOrderLikesOrComments() {return orderLikesOrComments; }
@@ -78,58 +81,23 @@ public class DiaryActionBean extends AbstractActionBean{
 
     public void setPage(int page){this.page=page;}
     public int getPage(){return this.page;}
-    private int clickedLike;
     public void setClickedLike(int clickedLike){this.clickedLike=clickedLike;}
     public int getClickedLike(){return clickedLike;}
-
-    // 작성한 덧글
-    private Comments comments;
     public Comments getComments() {return comments;}
     public void setComments(Comments comments) {
         this.comments = comments;
     }
     public void setC_no(int c_no){comments.setC_no(c_no);}
     public int getC_no(){return comments.getC_no();}
-
-    //my userid
-    private String myUserid;
     public String getMyUserid(){return myUserid;}
-    public void setMyuserid(String myUserid){this.myUserid=myUserid;}
-    private Diary diary;
+
     public Diary getDiary(){return diary;}
     public void setDiary(Diary diary){this.diary=diary;}
-    private List<Diary> diaryList;
     public List<Diary> getDiaryList(){return diaryList;}
-    private List<Comments> commentsList;
     public List<Comments> getCommentsList(){return commentsList;}
-
-    private Likes likes;
 
     public String getImgurl(){return diary.getImgurl();}
     public void setImgurl(String imgurl){diary.setImgurl(imgurl);}
-
-    public String getUserid(){return diary.getUserid();}
-    public void setUserid(String userid){diary.setUserid(userid);}
-
-    public String getDate(){return diary.getDate();}
-    public void setDate(String date){diary.setDate(date);}
-
-    public String getTitle(){return diary.getTitle();}
-    public void setTitle(String title){diary.setTitle(title);}
-
-    public String getContent(){return diary.getContent();}
-    public void setContent(String content){diary.setContent(content);}
-
-    public int getViews(){return diary.getViews();}
-    public void setViews(int views){diary.setViews(views);}
-
-    public int getNo(){return diary.getNo();}
-    public void setNo(int no){diary.setNo(no);}
-
-    public String getCategoryid(){return diary.getCategoryid();}
-    public void setCategoryid(String categoryid){diary.setCategoryid(categoryid);}
-    private int doLike=0;
-    public void setDoLike(int doLike){this.doLike=doLike;}
 
     public ForwardResolution getDiaryContent(){
       //  insertLike();
@@ -348,7 +316,8 @@ public class DiaryActionBean extends AbstractActionBean{
         return getDiaryContent();
     }
     public ForwardResolution deleteComment(){
-        diaryService.deleteComment(comments.getC_no());
+        comments.setD_no(diary.getNo());
+        diaryService.deleteComment(comments);
         return getDiaryContent();
     }
 
