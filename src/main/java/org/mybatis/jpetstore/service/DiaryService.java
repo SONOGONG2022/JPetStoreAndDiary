@@ -61,6 +61,10 @@ public class DiaryService {
 
     public List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments){return diaryMapper.getCategoriedDiaryList(page, categoryid, orderLikesOrComments);}
 
+    public int getDiaryCountByUserid(String userid){return diaryMapper.getDiaryCountByUserid(userid);}
+
+    public List<Diary> getDiaryListByUserid(String userid, int offset){ return diaryMapper.getDiaryListByUserid(userid, offset);}
+
     @Transactional
     public void insertComment(Comments comments){
         diaryCommentsMapper.insertComment(comments);

@@ -23,4 +23,8 @@ public interface DiaryMapper {
     List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments);
 
     List<Diary> getAnotherDiaryList(Diary diary);
+
+    int getDiaryCountByUserid(String userid);
+
+    List<Diary> getDiaryListByUserid(String userid, int page);
 }

@@ -39,6 +39,9 @@ public class DiaryActionBean extends AbstractActionBean{
     //diary board page
     private int page;
 
+    private int page2;
+
+
     // 업로드된 이미지
     private FileBean petImage;
     public FileBean getPetImage() {
@@ -54,6 +57,13 @@ public class DiaryActionBean extends AbstractActionBean{
     private int endPage;
     private boolean next;
     private boolean prev;
+
+    // paging 처리(현재 다이어리의 작성자가 쓴 다이어리 리스트)
+    private int totalCount2;
+    private int beginPage2;
+    private int endPage2;
+    private boolean next2;
+    private boolean prev2;
 
     // 정렬 기준 가지고 있는 변수
     private String orderCategory;
@@ -76,8 +86,15 @@ public class DiaryActionBean extends AbstractActionBean{
         return endPage;
     }
 
+    public boolean getNext2() {return next2;}
+    public boolean getPrev2() {return prev2;}
+    public int getBeginPage2() {return beginPage2;}
+    public int getEndPage2() {return endPage2;}
+
     public void setPage(int page){this.page=page;}
     public int getPage(){return this.page;}
+    public void setPage2(int page2){this.page2=page2;}
+    public int getPage2(){return this.page2;}
     private int clickedLike;
     public void setClickedLike(int clickedLike){this.clickedLike=clickedLike;}
     public int getClickedLike(){return clickedLike;}
@@ -102,6 +119,8 @@ public class DiaryActionBean extends AbstractActionBean{
     public List<Diary> getDiaryList(){return diaryList;}
     private List<Comments> commentsList;
     public List<Comments> getCommentsList(){return commentsList;}
+    private List<Diary> diaryListByUserid;
+    public List<Diary> getDiaryListByUserid(){return diaryListByUserid;}
 
     private Likes likes;
 
@@ -134,6 +153,11 @@ public class DiaryActionBean extends AbstractActionBean{
     public ForwardResolution getDiaryContent(){
       //  insertLike();
         diary=diaryService.getDiary(diary.getNo());
+
+        paging2();
+        int offset = (page2-1) * 5;
+        diaryListByUserid = diaryService.getDiaryListByUserid(diary.getUserid(), offset);
+
         commentsList = diaryService.getCommentsList(diary.getNo());
         if(isAuthenticated() && isMyDiaryOrComments(diary.getUserid())) {
             likes = new Likes();
@@ -248,6 +272,23 @@ public class DiaryActionBean extends AbstractActionBean{
             next = true;
         }
         prev = beginPage!=1;
+    }
+
+    public void paging2() {
+        totalCount2 = diaryService.getDiaryCountByUserid(diary.getUserid());
+        endPage2 = ((int)Math.ceil(page2 / (double)10)) * 10;
+
+        beginPage2 = endPage2 - (10 - 1);
+
+        int totalPage = (int)Math.ceil(totalCount2 / (double)5);
+
+        if (totalPage < endPage2) {
+            endPage2 = totalPage;
+            next2 = false;
+        } else {
+            next2 = true;
+        }
+        prev2 = beginPage2!=1;
     }
 
     public void fileUpload() throws IOException {

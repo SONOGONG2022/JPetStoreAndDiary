@@ -151,6 +151,58 @@
                 </c:if>
             </div>
             &nbsp;<br>
+            <div>
+                <c:forEach var="diary" items="${actionBean.diaryListByUserid}">
+                    <div class="detail">
+                        <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
+                            <stripes:param name="diary.no" value="${diary.no}" />
+                            <h4>${diary.title}</h4>
+                        </stripes:link>
+                    </div>
+                    <div class="sub-info">
+                        <span class="sub-sep">.</span>
+                        <span>${diary.date}</span>
+                        <span class="sub-sep">.</span>
+                        <span>댓글 수: ${diary.comments}</span>
+                        <span>좋아요 수: ${diary.likes}</span>
+                    </div>
+                </c:forEach>
+            </div>
+            <div>
+                <div>
+                    <c:if test="${actionBean.prev2}">
+                        <stripes:link
+                                beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                                event="getDiaryContent">
+                            prev
+                            <stripes:param name="page2" value="${actionBean.page2 - 1}" />
+                        </stripes:link>
+                    </c:if>
+                    <c:forEach begin="${actionBean.beginPage2}" end="${actionBean.endPage2}" step="1" var="index">
+                        <c:choose>
+                            <c:when test="${actionBean.page2==index}">
+                                ${index}
+                            </c:when>
+                            <c:otherwise>
+                                <stripes:link
+                                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                                        event="getDiaryContent">
+                                    ${index}
+                                    <stripes:param name="page2" value="${index}" />
+                                </stripes:link>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${actionBean.next2}">
+                        <stripes:link
+                                beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                                event="getDiaryContent">
+                            next
+                            <stripes:param name="page2" value="${actionBean.page2 + 1}" />
+                        </stripes:link>
+                    </c:if>
+                </div>
+            </div>
             <div class="image-wrap">
                 <img src="https://share.shbox.kr/jpetstore_war/static/${actionBean.diary.imgurl}" style="border-radius: 10px;" />
             </div>
