@@ -6,6 +6,10 @@ import org.mybatis.jpetstore.domain.Comments;
 import org.mybatis.jpetstore.domain.Diary;
 import org.mybatis.jpetstore.domain.Likes;
 import org.mybatis.jpetstore.service.DiaryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -122,16 +126,24 @@ public class DiaryActionBean extends AbstractActionBean{
 
     public String getCategoryid(){return diary.getCategoryid();}
     public void setCategoryid(String categoryid){diary.setCategoryid(categoryid);}
+    private int doLike=0;
+    public void setDoLike(int doLike){this.doLike=doLike;}
 
     public ForwardResolution getDiaryContent(){
+      //  insertLike();
         diary=diaryService.getDiary(diary.getNo());
         commentsList = diaryService.getCommentsList(diary.getNo());
-        clickedLike = 0;
         if(isAuthenticated() && isMyDiaryOrComments(diary.getUserid())) {
             likes = new Likes();
             likes.setUserid(myUserid);
             likes.setD_no(diary.getNo());
             System.out.println(clickedLike);
+            clickedLike= diaryService.didClickedLike(likes);
+        }
+        else if(isAuthenticated()){
+            likes = new Likes();
+            likes.setUserid(myUserid);
+            likes.setD_no(diary.getNo());
             clickedLike= diaryService.didClickedLike(likes);
         }
         return new ForwardResolution(VIEW_DIARY_CONTENT);
@@ -285,19 +297,39 @@ public class DiaryActionBean extends AbstractActionBean{
     public ForwardResolution goMain(){
         return new ForwardResolution(MAIN);
     }
+    public RedirectResolution contentRedirect(){
+        diary=diaryService.getDiary(diary.getNo());
+        commentsList = diaryService.getCommentsList(diary.getNo());
+        clickedLike = 0;
+        if(isAuthenticated() && isMyDiaryOrComments(diary.getUserid())) {
+            likes = new Likes();
+            likes.setUserid(myUserid);
+            likes.setD_no(diary.getNo());
+            System.out.println(clickedLike);
+            clickedLike= diaryService.didClickedLike(likes);
+        }
 
-    public ForwardResolution insertLike(){
+        return new RedirectResolution(VIEW_DIARY_CONTENT);
+    }
+
+    public Resolution insertLike(){
         likes = new Likes();
         likes.setUserid(myUserid);
         likes.setD_no(diary.getNo());
-        diaryService.insertLike(likes);
+        clickedLike=diaryService.didClickedLike(likes);
+        if(clickedLike==0){
+            diaryService.insertLike(likes);
+        }
         return getDiaryContent();
     }
     public ForwardResolution deleteLike(){
         likes = new Likes();
         likes.setUserid(myUserid);
         likes.setD_no(diary.getNo());
-        diaryService.deleteLike(likes);
+        clickedLike=diaryService.didClickedLike(likes);
+        if(clickedLike==1){
+            diaryService.deleteLike(likes);
+        }
         return getDiaryContent();
     }
 
@@ -314,6 +346,7 @@ public class DiaryActionBean extends AbstractActionBean{
         return getDiaryContent();
     }
     public ForwardResolution deleteComment(){
+
         diaryService.deleteComment(comments.getC_no());
         return getDiaryContent();
     }

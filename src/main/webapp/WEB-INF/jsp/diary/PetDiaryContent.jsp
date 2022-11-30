@@ -15,7 +15,7 @@
        limitations under the License.
 
 --%>
-<%@ include file="../diary/IncludeTop.jsp"%>
+<%@ include file="../diary/IncludeTopforDiary.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <%--<div id="BackLink"><stripes:link--%>
@@ -28,6 +28,40 @@
 <style>
     div {
         display: block;
+    }
+    .image-wrap{
+        width: 100%;
+        border-radius: 10px;
+        display: flex;
+        flex: 1 1 30%;
+        flex-direction: column;
+    }
+    .content-wrap{
+        text-align: left;
+        padding: 10px;
+        height: 300px;
+        background-color: #CCCCCC;
+        border-radius: 10px;
+    }
+    .comments-title{
+        text-align: left;
+        font-size: 25px;
+    }
+    .comments-wrap{
+    }
+    .comments{
+        padding: 10px;
+        height: 65px;
+        background-color: #CCCCCC;
+        border-radius: 10px;
+    }
+    .comments-list{
+    }
+    .other-wrap{
+        padding: 10px;
+        margin: 10px;
+        background-color: #CCCCCC;
+        border-radius: 10px;
     }
     .diary-wrap {
         display: flex;
@@ -57,98 +91,154 @@
         justify-content: space-between;
         align-items: center;
     }
+    .comments-content{
+        text-align: left;
+    }
+    .comments-write{
+        text-align: left;
+        font-size: 25px;
+    }
 </style>
 
 <div id="Catalog">
     <div class="diary-wrap">
         <div class="head-wrap">
-            <h1>${actionBean.diary.title}</h1>
+            <br><br>
+            <span style="font-size: 50px" align="left">
+                <b>&lt;&nbsp;${actionBean.diary.title}&nbsp;&gt;</b>
+            </span>
+            <span style="margin-left: 60%">
+                카테고리 : #${diary.categoryid}
+            </span>
+
+
             <div class="writer-info">
-                <span>
-                    ${actionBean.diary.userid}
+            <c:if test="${actionBean.diary.userid == sessionScope.accountBean.account.username}">
+                <span style="margin-left: 88.8%; font-size: 15px; border-radius:15px; padding: 4px; background-color: #aaaaaa">
+                        <stripes:link
+                                beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                                event="getNewDiaryForm">
+                            &nbsp;&nbsp;새 글 작성&nbsp;&nbsp;
+                        </stripes:link>
                 </span>
-                <span> . </span>
-                <span>
+            </c:if>
+            </div>
+
+            <div class="writer-info">
+                <span style="font-size: 15px; padding: 10px; margin: 10px; background-color: #CCCCCC; border-radius: 10px;">
+                    ${actionBean.diary.userid}
+                ••
                     ${actionBean.diary.date}
                 </span>
+                <!--게시글 작성자 아이디로 로그인이 되어있는지 조건에 대한 조건-->
                 <c:if test="${actionBean.diary.userid == sessionScope.accountBean.account.username}">
+                    <span style="margin-left: 55%; font-size: 15px; border-radius:15px; padding: 4px; background-color: #aaaaaa">
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="getEditDiaryForm">
                         <stripes:param name="diary.no" value="${actionBean.diary.no}" />
-                        Edit
+                        &nbsp;&nbsp;수정&nbsp;&nbsp;
                     </stripes:link>
+                    </span>
+                    <span style="margin-left: 1%; font-size: 15px; border-radius:15px; padding: 4px; background-color: #aaaaaa">
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="deleteDiary">
                         <stripes:param name="diary.no" value="${actionBean.diary.no}" />
-                        Delete
+                        &nbsp;&nbsp;삭제&nbsp;&nbsp;
                     </stripes:link>
+                        </span>
                 </c:if>
             </div>
-            <div>
-                <img src="https://share.shbox.kr/jpetstore_war/static/${actionBean.diary.imgurl}" />
+            &nbsp;<br>
+            <div class="image-wrap">
+                <img src="https://share.shbox.kr/jpetstore_war/static/${actionBean.diary.imgurl}" style="border-radius: 10px;" />
             </div>
         </div>
+        <br><br>
         <div class="content-wrap">
             ${actionBean.diary.content}
         </div>
-        <div class="comments-wrap">
-            <h4>${actionBean.diary.comments} 개의 덧글</h4>
-            <h4>${actionBean.diary.likes} 좋아요</h4>
-            <c:if test="${actionBean.clickedLike == 1}">
-                <stripes:link class="Button"
-                              beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                              event="deleteLike">
-                    좋아요 취소
-                </stripes:link>
-            </c:if>
-            <c:if test="${actionBean.clickedLike == 0}">
-                <stripes:link class="Button"
-                              beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                              event="insertLike">
-                    좋아요
-                </stripes:link>
-            </c:if>
+
+        <c:if test="${sessionScope.accountBean != null}">
+            <br><br>
+            <span class="comments-write"><b>댓글 작성하기</b></span>
+            <br>
             <div class="comments">
                 <div>
                     <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                                   focus="">
-                        <stripes:text name="comments.comment"/>
-                        <stripes:submit name="addDiary" value="Submit" />
+                        <stripes:text size="100%" name="comments.comment"/>
+                        <br><br>
+                        <stripes:submit name="insertComment" value="Submit" />
                     </stripes:form>
                 </div>
             </div>
-            <div>
+        </c:if>
+
+        <br><br>
+        <div class="comments-wrap">
+            <div class="comments-title">
+            <span class="comments-content"><b>${actionBean.diary.comments} 개의 덧글</b></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="comments-content"><b>${actionBean.diary.likes} 개의 좋아요</b></span>
+            <c:if test="${sessionScope.accountBean != null}">
+                <c:if test="${actionBean.clickedLike == 1}">
+                    <span>
+                    <stripes:link
+                            beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                            event="deleteLike">
+                        💔
+                    </stripes:link>
+                    </span>
+                </c:if>
+                <c:if test="${actionBean.clickedLike == 0}">
+                    <span>
+                    <stripes:link
+                            beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                            event="insertLike">
+                        💕
+                    </stripes:link>
+                    </span>
+                </c:if>
+            </c:if>
+            </div>
+
+            <br>
+            <div class="comments-list">
                 <c:forEach var="comments" items="${actionBean.commentsList}">
                     <div class="other-wrap">
                         <div class="comments-writer">
-                            <span>${comments.userid}</span>
+                            <span style="color: #666666">작성자 : ${comments.userid}</span>
+                            <span style="color: #666666">${comments.date}</span>
                         </div>
-                        <div>
-                            <span>${comments.date}</span>
-                        </div>
-                        <div>
+
+                        <div class="comments-content">
                             ${comments.comment}
                         </div>
                         <c:if test="${comments.userid == sessionScope.accountBean.account.username}">
+                            <span style="margin-left: 87%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa">
                             <stripes:link
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                                    event="getEditCommentsForm">
-                                Edit
+                                    event="updateComment">
+                                <stripes:param name="diary.no" value="${actionBean.diary.no}" />
+                                &nbsp;&nbsp;수정&nbsp;&nbsp;
                             </stripes:link>
+                            </span>
+                            <span style="margin-left: 1%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa">
                             <stripes:link
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                                     event="deleteComment">
-                                Delete
+                                <stripes:param name="diary.no" value="${actionBean.diary.no}" />
+                                &nbsp;&nbsp;삭제&nbsp;&nbsp;
                             </stripes:link>
+                            </span>
                         </c:if>
                     </div>
                 </c:forEach>
             </div>
         </div>
     </div>
-    <div>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

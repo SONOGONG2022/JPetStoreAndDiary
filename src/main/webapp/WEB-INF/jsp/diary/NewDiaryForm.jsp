@@ -1,21 +1,4 @@
-<%--
-
-       Copyright 2010-2022 the original author or authors.
-
-       Licensed under the Apache License, Version 2.0 (the "License");
-       you may not use this file except in compliance with the License.
-       You may obtain a copy of the License at
-
-          https://www.apache.org/licenses/LICENSE-2.0
-
-       Unless required by applicable law or agreed to in writing, software
-       distributed under the License is distributed on an "AS IS" BASIS,
-       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-       See the License for the specific language governing permissions and
-       limitations under the License.
-
---%>
-<%@ include file="../diary/IncludeTop.jsp"%>
+<%@ include file="../diary/IncludeTopforDiary.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
     request.setCharacterEncoding("utf-8");
@@ -27,33 +10,66 @@
 <%--    <stripes:param name="productId" value="${actionBean.product.productId}" />--%>
 <%--    Return to ${actionBean.product.productId}--%>
 <%--</stripes:link></div>--%>
+<style>
+    .comments{
+        margin-left: 1%;
+        padding: 10px;
+        height: 50px;
+        background-color: #CCCCCC;
+        border-radius: 10px;
+    }
+    .comments_image{
+        margin-left: 28%;
+        padding: 10px;
+        height: 65px;
+        background-color: #CCCCCC;
+        border-radius: 10px;
+    }
+</style>
 
 <div id="Catalog">
-
-    <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                  focus="">
-        <table>
-            <tr>
-                <td><stripes:file name="petImage" accept=".jpg,.png,.jpeg"/></td>
-            </tr>
-            <tr>
+    <div class="diary-wrap">
+        <div class="head-wrap">
+            <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" focus="">
+                &nbsp;<br><br>
+                <span style="margin-left: 35%">
+                    Categories:
                 <stripes:select name="diary.categoryid">
                     <stripes:options-collection collection="${sessionScope.accountBean.categories}" />
                 </stripes:select>
-            </tr>
-            <tr>
-                <td><stripes:text name="diary.title"/></td>
-            </tr>
-            <tr>
-                <td><stripes:text name="diary.content"/></td>
-            </tr>
-            <tr>
-                    ${sessionScope.accountBean.account.username}
+                </span>
+                <br><br>
+                <div>
+                    <span style="font-size: 30px" align="left">
+                        <b>제목 : </b>
+                        <span class="comments">
+                            <stripes:text size="80%" name="diary.title"/>
+                        </span>
+                    </span>
+                </div><br><br>
+
+                <div>
+                    <span style="font-size: 30px" align="left">
+                        <b>내용 : </b>
+                        <span class="comments">
+                            <stripes:text size="80%" name="diary.content"/>
+                        </span>
+                    </span>
+                </div><br><br>
+
+                <div>
+                   <span class="comments_image">
+                        <stripes:file name="petImage" accept=".jpg,.png,.jpeg"/>
+                    </span>
+                </div><br>
+
+                ${sessionScope.accountBean.account.username}
                 <stripes:param name="diary.userid" value="${sessionScope.accountBean.account.username}" />
-            </tr>
-        </table>
-        <stripes:submit name="insertDiary" value="Submit" />
-    </stripes:form>
+
+                <stripes:submit name="insertDiary" value="Submit" />
+            </stripes:form>
+        </div>
+    </div>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

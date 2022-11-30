@@ -15,7 +15,7 @@
        limitations under the License.
 
 --%>
-<%@ include file="../diary/IncludeTop.jsp"%>
+<%@ include file="../diary/IncludeTopforDiary.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <%--<div id="BackLink"><stripes:link--%>
@@ -24,21 +24,28 @@
 <%--    <stripes:param name="productId" value="${actionBean.product.productId}" />--%>
 <%--    Return to ${actionBean.product.productId}--%>
 <%--</stripes:link></div>--%>
-
+<html>
 <style>
+    #Catalog{
+        background-color: dimgray;
+    }
     div {
         display: block;
     }
+    .order{
+        text-align: right;
+    }
     .diary-wrap {
+        border-radius: 10px;
         display: flex;
-        margin: -1rem;
         flex-wrap: wrap;
     }
     .card-wrap {
-        width:20rem;
-        border-radius: 4px;
-        margin: 1rem;
+        width: 15em;
+        border-radius: 10px;
+        margin: 3em;
         display: flex;
+        flex: 1 1 20%;
         flex-direction: column;
         background: #1E1E1E;
     }
@@ -51,7 +58,7 @@
     .detail {
         padding: 1rem;
         display: flex;
-        flex: 1 1 0%;
+        flex: 1 1 20%;
         flex-direction: column;
     }
     .detail-box {
@@ -87,11 +94,19 @@
         line-height: 1.5;
         justify-content: space-between;
     }
+    .order{
+        font-size: 18px;
+        color: black;
+    }
+
 </style>
 
+<body>
 <div id="Catalog">
+    <br> <br>
     <div class="order">
-        <span>정렬 기준 </span>
+        &nbsp;<br>
+        <span>정렬 기준 :
         <c:forTokens var="order" items="likes,comments" delims=",">
             <c:choose>
                 <c:when test="${actionBean.orderLikesOrComments==order}">
@@ -103,17 +118,18 @@
                             event="viewDiaryBoard">
                         ${order}
                         <stripes:param name="orderLikesOrComments" value="${order}" />
-                    </stripes:link>
+                    </stripes:link >
                 </c:otherwise>
             </c:choose>
         </c:forTokens>
+        </span>
     </div>
     <div class="diary-wrap">
         <c:forEach var="diary" items="${actionBean.diaryList}">
             <div class="card-wrap">
                 <stripes:link class="thumbnail" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
                     <stripes:param name="diary.no" value="${diary.no}" />
-                    <img src="https://share.shbox.kr/jpetstore_war/static/${diary.imgurl}" style="width:100%; height: 100%;">
+                    <img src="https://share.shbox.kr/jpetstore_war/static/${diary.imgurl}" style="width:100%; height: 100%; border-radius: 10px 10px 0 0;">
                 </stripes:link>
                 <div class="detail">
                     <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
@@ -141,12 +157,12 @@
             </div>
         </c:forEach>
     </div>
-    <div>
+    <div class="page">
         <c:if test="${actionBean.prev}">
             <stripes:link
                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                     event="viewDiaryBoard">
-                prev
+                ◁
                 <stripes:param name="page" value="${actionBean.page - 1}" />
             </stripes:link>
         </c:if>
@@ -169,7 +185,7 @@
             <stripes:link
                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                     event="viewDiaryBoard">
-                next
+                ▷
                 <stripes:param name="page" value="${actionBean.page + 1}" />
             </stripes:link>
         </c:if>
@@ -182,6 +198,8 @@
         </stripes:link>
     </div>
 </div>
+</body>
+</html>
 
 <%@ include file="../common/IncludeBottom.jsp"%>
 
