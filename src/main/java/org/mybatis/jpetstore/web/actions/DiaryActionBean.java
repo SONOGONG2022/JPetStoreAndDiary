@@ -88,6 +88,8 @@ public class DiaryActionBean extends AbstractActionBean{
     public void setComments(Comments comments) {
         this.comments = comments;
     }
+    public void setC_no(int c_no){comments.setC_no(c_no);}
+    public int getC_no(){return comments.getC_no();}
 
     //my userid
     private String myUserid;
@@ -346,7 +348,6 @@ public class DiaryActionBean extends AbstractActionBean{
         return getDiaryContent();
     }
     public ForwardResolution deleteComment(){
-
         diaryService.deleteComment(comments.getC_no());
         return getDiaryContent();
     }

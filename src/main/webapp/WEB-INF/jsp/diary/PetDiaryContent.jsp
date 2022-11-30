@@ -229,7 +229,7 @@
                             <stripes:link
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                                     event="deleteComment">
-                                <stripes:param name="diary.no" value="${actionBean.diary.no}" />
+                                <stripes:param name="comments.c_no" value="${comments.c_no}" />
                                 &nbsp;&nbsp;삭제&nbsp;&nbsp;
                             </stripes:link>
                             </span>
