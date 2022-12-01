@@ -107,7 +107,7 @@
     <div class="order">
         &nbsp;<br>
         <span>정렬 기준 :
-        <c:forTokens var="order" items="likes,comments" delims=",">
+        <c:forTokens var="order" items="likes,comments, latest" delims=",">
             <c:choose>
                 <c:when test="${actionBean.orderLikesOrComments==order}">
                     ${order}
@@ -156,6 +156,15 @@
                 </div>
             </div>
         </c:forEach>
+    </div>
+    <div class="search">
+        <div>
+            <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                          focus="">
+                <stripes:text size="30%" name="keyword"/>
+                <stripes:submit name="viewDiaryBoard" value="Search" />
+            </stripes:form>
+        </div>
     </div>
     <div class="page">
         <c:if test="${actionBean.prev}">

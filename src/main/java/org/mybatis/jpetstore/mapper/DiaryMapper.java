@@ -1,6 +1,5 @@
 package org.mybatis.jpetstore.mapper;
 
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.jpetstore.domain.Diary;
 
 import java.util.List;
@@ -21,6 +20,11 @@ public interface DiaryMapper {
     int getCategoriedDiaryCount(String categoryid);
 
     List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments);
+
+    List<Diary> getSearchedDiaryList(int page, String orderLikesOrComments,String keyword);
+    int getSearchedDiaryCount(String keyword);
+    List<Diary> getSearchedCategoriedDiaryList(int page, String orderLikesOrComments,String categoryid,String keyword);
+    int getSearchedCategoriedDiaryCount(String categoryid, String keyword);
 
     List<Diary> getAnotherDiaryList(Diary diary);
 

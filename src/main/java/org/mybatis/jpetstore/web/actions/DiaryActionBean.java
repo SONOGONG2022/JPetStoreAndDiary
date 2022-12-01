@@ -6,10 +6,6 @@ import org.mybatis.jpetstore.domain.Comments;
 import org.mybatis.jpetstore.domain.Diary;
 import org.mybatis.jpetstore.domain.Likes;
 import org.mybatis.jpetstore.service.DiaryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -99,6 +95,10 @@ public class DiaryActionBean extends AbstractActionBean{
     public String getImgurl(){return diary.getImgurl();}
     public void setImgurl(String imgurl){diary.setImgurl(imgurl);}
 
+    private String keyword;
+    public void setKeyword(String keyword){this.keyword=keyword;}
+    public String getKeyword(){return keyword;}
+
     public ForwardResolution getDiaryContent(){
       //  insertLike();
         diary=diaryService.getDiary(diary.getNo());
@@ -183,25 +183,29 @@ public class DiaryActionBean extends AbstractActionBean{
     }
 
     public ForwardResolution viewDiaryBoard(){
-        paging();
-        int offset = (page - 1) * 6;
         if (orderLikesOrComments == null) {
             orderLikesOrComments = "likes";
         }
-        if (orderCategory == null || orderCategory.equals("ALL")) {
-            diaryList=diaryService.getDiaryList(orderLikesOrComments, offset);
-        } else {
-            diaryList=diaryService.getCategoriedDiaryList(offset, orderCategory, orderLikesOrComments);
+        if(orderLikesOrComments.equals("latest")){
+            orderLikesOrComments="no";
+        }
+        paging();
+        int offset = (page - 1) * 6;
+        if(keyword==null){
+            setDiaryList(offset);
+        }
+        else{
+            setSearchedDiaryList(offset);
         }
         return new ForwardResolution(VIEW_PET_DIARY_BOARD);
     }
 
     public void paging() {
-        if(orderCategory==null || orderCategory.equals("ALL")){
-            totalCount = diaryService.getDiaryCount();
+        if(keyword==null){
+            setDiaryCount();
         }
         else{
-            totalCount = diaryService.getCategoriedDiaryCount(orderCategory);
+            setSearchedDiaryCount();
         }
         endPage = ((int)Math.ceil(page / (double)10)) * 10;
 
@@ -217,7 +221,36 @@ public class DiaryActionBean extends AbstractActionBean{
         }
         prev = beginPage!=1;
     }
-
+    public void setDiaryCount(){
+        if(orderCategory==null || orderCategory.equals("ALL")){
+            totalCount = diaryService.getDiaryCount();
+        }
+        else{
+            totalCount = diaryService.getCategoriedDiaryCount(orderCategory);
+        }
+    }
+    public void setSearchedDiaryCount(){
+        if(orderCategory==null || orderCategory.equals("ALL")){
+            totalCount = diaryService.getSearchedDiaryListCount(keyword);
+        }
+        else{
+            totalCount = diaryService.getSearchedCategoriedDiaryListCount(orderCategory,keyword);
+        }
+    }
+    public void setDiaryList(int offset){
+        if (orderCategory == null || orderCategory.equals("ALL")) {
+            diaryList=diaryService.getDiaryList(orderLikesOrComments, offset);
+        } else {
+            diaryList=diaryService.getCategoriedDiaryList(offset, orderCategory, orderLikesOrComments);
+        }
+    }
+    public void setSearchedDiaryList(int offset){
+        if (orderCategory == null || orderCategory.equals("ALL")) {
+            diaryList=diaryService.getSearchedDiaryList(offset, orderLikesOrComments, keyword);
+        } else {
+            diaryList=diaryService.getSearchedCategoriedDiaryList(offset, orderCategory, orderLikesOrComments, keyword);
+        }
+    }
     public void fileUpload() throws IOException {
         String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());  //현재시간
         String saveDir = context.getRequest().getSession().getServletContext().getRealPath("/static");
