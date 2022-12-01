@@ -144,7 +144,7 @@
                 <stripes:link style="color:gray;"
                               beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                               event="getDiaryContent">
-                    prev
+                    ◁
                     <stripes:param name="page2" value="${actionBean.page2 - 1}" />
                 </stripes:link>
             </c:if>
@@ -167,7 +167,7 @@
                 <stripes:link style="color:gray;"
                               beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                               event="getDiaryContent">
-                    next
+                    ▷
                     <stripes:param name="page2" value="${actionBean.page2 + 1}" />
                 </stripes:link>
             </c:if>
