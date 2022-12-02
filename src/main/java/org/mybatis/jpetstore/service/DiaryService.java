@@ -67,8 +67,8 @@ public class DiaryService {
     public int getSearchedDiaryListCount(String keyword){
         return diaryMapper.getSearchedDiaryCount(keyword);
     }
-    public List<Diary> getSearchedCategoriedDiaryList(int page, String orderLikesOrComments,String categoryid,String keyword){
-        return diaryMapper.getSearchedCategoriedDiaryList(page,orderLikesOrComments,categoryid,keyword);
+    public List<Diary> getSearchedCategoriedDiaryList(int page,String categoryid, String orderLikesOrComments,String keyword){
+        return diaryMapper.getSearchedCategoriedDiaryList(page,categoryid,orderLikesOrComments,keyword);
     }
     public int getSearchedCategoriedDiaryListCount(String categoryid,String keyword){
         return diaryMapper.getSearchedCategoriedDiaryCount(categoryid,keyword);

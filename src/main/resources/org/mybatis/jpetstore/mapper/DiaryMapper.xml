@@ -90,7 +90,7 @@
 
     <select id="getSearchedCategoriedDiaryList" resultType="Diary">
         select no, imgurl, title, categoryid, userid, date, likes, comments
-        from DIARY where categoryid = #{param3} AND
+        from DIARY where categoryid = #{param2} AND
                        (userid like CONCAT('%',#{param4},'%') OR title like CONCAT('%',#{param4},'%'))
             order by ${param3} desc limit #{param1}, 6;
     </select>

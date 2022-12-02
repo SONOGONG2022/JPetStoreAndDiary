@@ -23,7 +23,7 @@ public interface DiaryMapper {
 
     List<Diary> getSearchedDiaryList(int page, String orderLikesOrComments,String keyword);
     int getSearchedDiaryCount(String keyword);
-    List<Diary> getSearchedCategoriedDiaryList(int page, String orderLikesOrComments,String categoryid,String keyword);
+    List<Diary> getSearchedCategoriedDiaryList(int page,String categoryid, String orderLikesOrComments,String keyword);
     int getSearchedCategoriedDiaryCount(String categoryid, String keyword);
 
     List<Diary> getAnotherDiaryList(Diary diary);

@@ -124,6 +124,94 @@
         </c:forTokens>
         </span>
     </div>
+
+    <div id="DiaryCategory"><br><br>
+        <c:choose>
+            <c:when test="${actionBean.orderCategory == 'ALL' || actionBean.orderCategory == null}">
+                <span style="color:black;">ALL</span>
+            </c:when>
+            <c:otherwise>
+                <stripes:link
+                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                        event="viewDiaryBoard">
+                    <stripes:param name="orderCategory" value="ALL" />
+                    <stripes:param name="page" value="1" />
+                    <span>ALL</span>
+                </stripes:link>
+            </c:otherwise>
+        </c:choose> |
+        <c:choose>
+            <c:when test="${actionBean.orderCategory == 'FISH'}">
+                <span style="color:black;">FISH</span>
+            </c:when>
+            <c:otherwise>
+                <stripes:link
+                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                        event="viewDiaryBoard">
+                    <stripes:param name="orderCategory" value="FISH" />
+                    <stripes:param name="page" value="1" />
+                    <span>FISH</span>
+                </stripes:link>
+            </c:otherwise>
+        </c:choose> |
+        <c:choose>
+            <c:when test="${actionBean.orderCategory == 'DOGS'}">
+                <span style="color:black;">DOGS</span>
+            </c:when>
+            <c:otherwise>
+                <stripes:link
+                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                        event="viewDiaryBoard">
+                    <stripes:param name="orderCategory" value="DOGS" />
+                    <stripes:param name="page" value="1" />
+                    <span>DOGS</span>
+                </stripes:link>
+            </c:otherwise>
+        </c:choose> |
+        <c:choose>
+            <c:when test="${actionBean.orderCategory == 'CATS'}">
+                <span style="color:black;">CATS</span>
+            </c:when>
+            <c:otherwise>
+                <stripes:link
+                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                        event="viewDiaryBoard">
+                    <stripes:param name="orderCategory" value="CATS" />
+                    <stripes:param name="page" value="1" />
+                    <span>CATS</span>
+                </stripes:link>
+            </c:otherwise>
+        </c:choose> |
+        <c:choose>
+            <c:when test="${actionBean.orderCategory == 'REPTILES'}">
+                <span style="color:black;">REPTILES</span>
+            </c:when>
+            <c:otherwise>
+                <stripes:link
+                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                        event="viewDiaryBoard">
+                    <stripes:param name="orderCategory" value="REPTILES" />
+                    <stripes:param name="page" value="1" />
+                    <span>REPTILES</span>
+                </stripes:link>
+            </c:otherwise>
+        </c:choose> |
+        <c:choose>
+            <c:when test="${actionBean.orderCategory == 'BIRDS'}">
+                <span style="color:black;">BIRDS</span>
+            </c:when>
+            <c:otherwise>
+                <stripes:link
+                        beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+                        event="viewDiaryBoard">
+                    <stripes:param name="orderCategory" value="BIRDS" />
+                    <stripes:param name="page" value="1" />
+                    <span>BIRDS</span>
+                </stripes:link>
+            </c:otherwise>
+        </c:choose>
+    </div>
+
     <div class="diary-wrap">
         <c:forEach var="diary" items="${actionBean.diaryList}">
             <div class="card-wrap">
