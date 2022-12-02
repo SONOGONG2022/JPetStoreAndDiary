@@ -103,6 +103,7 @@
 					beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
 					event="viewDiaryBoard">
 				<stripes:param name="page" value="1"/>
+				<stripes:param name="reset" value="1" />
 				Pet Diary
 			</stripes:link>
 			<img align="middle" src="../images/separator.gif"/>

@@ -99,6 +99,9 @@ public class DiaryActionBean extends AbstractActionBean{
     public void setKeyword(String keyword){this.keyword=keyword;}
     public String getKeyword(){return keyword;}
 
+    public int reset=0;
+
+
     public ForwardResolution getDiaryContent(){
       //  insertLike();
         diary=diaryService.getDiary(diary.getNo());
@@ -183,6 +186,11 @@ public class DiaryActionBean extends AbstractActionBean{
     }
 
     public ForwardResolution viewDiaryBoard(){
+        if(reset==1) {
+            reset=0;
+            page=1;
+            keyword=null;
+        }
         if (orderLikesOrComments == null) {
             orderLikesOrComments = "likes";
         }
@@ -197,6 +205,8 @@ public class DiaryActionBean extends AbstractActionBean{
         else{
             setSearchedDiaryList(offset);
         }
+        System.out.println("r: "+reset);
+        System.out.println("k: "+keyword);
         return new ForwardResolution(VIEW_PET_DIARY_BOARD);
     }
 
@@ -352,6 +362,11 @@ public class DiaryActionBean extends AbstractActionBean{
         comments.setD_no(diary.getNo());
         diaryService.deleteComment(comments);
         return getDiaryContent();
+    }
+
+    public void clear(){
+        //orderLikesOrComments=null;
+        keyword=null;
     }
 
 }
