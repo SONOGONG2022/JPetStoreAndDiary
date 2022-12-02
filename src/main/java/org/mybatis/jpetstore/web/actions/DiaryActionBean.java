@@ -94,7 +94,7 @@ public class DiaryActionBean extends AbstractActionBean{
         diary=diaryService.getDiary(no);
         commentsList = diaryService.getCommentsList(no);
         clickedLike = 0;
-        if(isAuthenticated() && isMyDiaryOrComments(diary.getUserid())) {
+        if(isAuthenticated()) {
             likes = new Likes();
             likes.setUserid(myUserid);
             likes.setD_no(diary.getNo());
@@ -302,6 +302,7 @@ public class DiaryActionBean extends AbstractActionBean{
         if (!isAuthenticated() || no == 0)
             return new RedirectResolution(DiaryActionBean.class);
         likes.setUserid(myUserid);
+        likes.setD_no(no);
         clickedLike=diaryService.didClickedLike(likes);
         if(clickedLike==0){
             diaryService.insertLike(likes);
@@ -319,6 +320,7 @@ public class DiaryActionBean extends AbstractActionBean{
         if (!isAuthenticated() || no == 0)
             return new RedirectResolution(DiaryActionBean.class);
         likes.setUserid(myUserid);
+        likes.setD_no(no);
         clickedLike=diaryService.didClickedLike(likes);
         if(clickedLike==1){
             diaryService.deleteLike(likes);
@@ -384,6 +386,7 @@ public class DiaryActionBean extends AbstractActionBean{
         prev = false;
 
         likes = new Likes();
+        comments = new Comments();
         clickedLike = 0;
 
         orderCategory = null;
