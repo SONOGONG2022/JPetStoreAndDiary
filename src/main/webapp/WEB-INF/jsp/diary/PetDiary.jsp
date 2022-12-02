@@ -107,17 +107,17 @@
     <div class="order">
         &nbsp;<br>
         <span>정렬 기준 :
-        <c:forTokens var="order" items="likes,comments" delims=",">
+        <c:forTokens var="order" items="likes;likes,comments;comments,latest;no" delims=",">
             <c:choose>
-                <c:when test="${actionBean.orderLikesOrComments==order}">
-                    ${order}
+                <c:when test="${actionBean.orderLikesOrComments==order.split(';')[1]}">
+                    ${order.split(';')[0]}
                 </c:when>
                 <c:otherwise>
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="viewDiaryBoard">
-                        ${order}
-                        <stripes:param name="orderLikesOrComments" value="${order}" />
+                        ${order.split(';')[0]}
+                        <stripes:param name="orderLikesOrComments" value="${order.split(';')[1]}" />
                     </stripes:link >
                 </c:otherwise>
             </c:choose>
@@ -156,6 +156,14 @@
                 </div>
             </div>
         </c:forEach>
+    </div>
+    <div class="search">
+        <div>
+            <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean">
+                <stripes:text size="30%" name="keyword"/>
+                <stripes:submit name="viewDiaryBoard" value="Search" />
+            </stripes:form>
+        </div>
     </div>
     <div class="page">
         <c:if test="${actionBean.prev}">

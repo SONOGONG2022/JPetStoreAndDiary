@@ -94,6 +94,7 @@
 		<stripes:param name="page" value="1" />
 		<stripes:param name="orderCategory" value="ALL" />
 		<stripes:param name="orderLikesOrComments" value="likes" />
+		<stripes:param name="reset" value="1" />
 	Pet Diary
 </stripes:link>
 	<img align="middle" src="../images/separator.gif" /> <a

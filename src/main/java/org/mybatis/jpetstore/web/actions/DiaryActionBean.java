@@ -6,10 +6,6 @@ import org.mybatis.jpetstore.domain.Comments;
 import org.mybatis.jpetstore.domain.Diary;
 import org.mybatis.jpetstore.domain.Likes;
 import org.mybatis.jpetstore.service.DiaryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -60,26 +56,16 @@ public class DiaryActionBean extends AbstractActionBean{
     public void setOrderCategory(String orderCategory) {this.orderCategory = orderCategory;}
     public String getOrderLikesOrComments() {return orderLikesOrComments; }
     public void setOrderLikesOrComments(String orderLikesOrComments) {this.orderLikesOrComments = orderLikesOrComments;}
-    public boolean getNext() {
-        return next;
-    }
-    public boolean getPrev() {
-        return prev;
-    }
-    public int getBeginPage() {
-        return beginPage;
-    }
-    public int getEndPage() {
-        return endPage;
-    }
+    public boolean getNext() {return next;}
+    public boolean getPrev() {return prev;}
+    public int getBeginPage() {return beginPage;}
+    public int getEndPage() {return endPage;}
     public void setPage(int page){this.page=page;}
     public int getPage(){return this.page;}
     public void setClickedLike(int clickedLike){this.clickedLike=clickedLike;}
     public int getClickedLike(){return clickedLike;}
     public Comments getComments() {return comments;}
-    public void setComments(Comments comments) {
-        this.comments = comments;
-    }
+    public void setComments(Comments comments) {this.comments = comments;}
     public void setC_no(int c_no){comments.setC_no(c_no);}
     public int getC_no(){return comments.getC_no();}
     public String getMyUserid(){return myUserid;}
@@ -89,12 +75,12 @@ public class DiaryActionBean extends AbstractActionBean{
     public List<Comments> getCommentsList(){return commentsList;}
     public String getImgurl(){return diary.getImgurl();}
     public void setImgurl(String imgurl){diary.setImgurl(imgurl);}
-    public FileBean getPetImage() {
-        return petImage;
-    }
-    public void setPetImage(FileBean petImage) {
-        this.petImage = petImage;
-    }
+    public FileBean getPetImage() {return petImage;}
+    public void setPetImage(FileBean petImage) {this.petImage = petImage;}
+    private String keyword;
+    public void setKeyword(String keyword){this.keyword=keyword;}
+    public String getKeyword(){return keyword;}
+    public int reset=0;
 
     /**
      * param1 : no
@@ -195,28 +181,29 @@ public class DiaryActionBean extends AbstractActionBean{
      * @return Forward, 양육일기 리스트 조회
      */
     public ForwardResolution viewDiaryBoard(){
-        if (page == 0) {
-            page = 1;
+        if(reset == 1 || page == 0) {
+            clear();
         }
-        paging();
-        int offset = (page - 1) * 6;
         if (orderLikesOrComments == null) {
             orderLikesOrComments = "likes";
         }
-        if (orderCategory == null || orderCategory.equals("ALL")) {
-            diaryList=diaryService.getDiaryList(orderLikesOrComments, offset);
-        } else {
-            diaryList=diaryService.getCategoriedDiaryList(offset, orderCategory, orderLikesOrComments);
+        paging();
+        int offset = (page - 1) * 6;
+        if(keyword==null){
+            setDiaryList(offset);
+        }
+        else{
+            setSearchedDiaryList(offset);
         }
         return new ForwardResolution(VIEW_PET_DIARY_BOARD);
     }
 
     public void paging() {
-        if(orderCategory==null || orderCategory.equals("ALL")){
-            totalCount = diaryService.getDiaryCount();
+        if(keyword==null){
+            setDiaryCount();
         }
         else{
-            totalCount = diaryService.getCategoriedDiaryCount(orderCategory);
+            setSearchedDiaryCount();
         }
         endPage = ((int)Math.ceil(page / (double)10)) * 10;
 
@@ -232,7 +219,36 @@ public class DiaryActionBean extends AbstractActionBean{
         }
         prev = beginPage!=1;
     }
-
+    public void setDiaryCount(){
+        if(orderCategory==null || orderCategory.equals("ALL")){
+            totalCount = diaryService.getDiaryCount();
+        }
+        else{
+            totalCount = diaryService.getCategoriedDiaryCount(orderCategory);
+        }
+    }
+    public void setSearchedDiaryCount(){
+        if(orderCategory==null || orderCategory.equals("ALL")){
+            totalCount = diaryService.getSearchedDiaryListCount(keyword);
+        }
+        else{
+            totalCount = diaryService.getSearchedCategoriedDiaryListCount(orderCategory,keyword);
+        }
+    }
+    public void setDiaryList(int offset){
+        if (orderCategory == null || orderCategory.equals("ALL")) {
+            diaryList=diaryService.getDiaryList(orderLikesOrComments, offset);
+        } else {
+            diaryList=diaryService.getCategoriedDiaryList(offset, orderCategory, orderLikesOrComments);
+        }
+    }
+    public void setSearchedDiaryList(int offset){
+        if (orderCategory == null || orderCategory.equals("ALL")) {
+            diaryList=diaryService.getSearchedDiaryList(offset, orderLikesOrComments, keyword);
+        } else {
+            diaryList=diaryService.getSearchedCategoriedDiaryList(offset, orderCategory, orderLikesOrComments, keyword);
+        }
+    }
     public void fileUpload() throws IOException {
         String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());  //현재시간
         String saveDir = context.getRequest().getSession().getServletContext().getRealPath("/static");
@@ -377,5 +393,8 @@ public class DiaryActionBean extends AbstractActionBean{
         diaryList = null;
 
         myUserid = null;
+
+        keyword=null;
+        reset = 0;
     }
 }

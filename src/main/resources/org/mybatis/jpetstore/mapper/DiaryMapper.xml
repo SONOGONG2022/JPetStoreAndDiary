@@ -68,7 +68,30 @@
     <update id="updateDiaryComments" parameterType="int">
         update DIARY set comments = #{param2} where no = #{param1};
     </update>
+
     <select id="getDiaryUser" resultType="String">
         select userid from DIARY where no = #{no};
+    </select>
+
+    <select id="getSearchedDiaryCount" resultType="int" parameterType="String">
+        select count(*) from DIARY where userid like CONCAT('%',#{keyword},'%') OR title like CONCAT('%',#{keyword},'%');
+    </select>
+
+    <select id="getSearchedCategoriedDiaryCount" resultType="int">
+        select count(*) from DIARY where categoryid = #{param1} AND
+            (userid like CONCAT('%',#{param2},'%') OR title like CONCAT('%',#{param2},'%'));
+    </select>
+
+    <select id="getSearchedDiaryList" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date, likes, comments
+        from DIARY where userid like CONCAT('%',#{param3},'%') OR title like CONCAT('%',#{param3},'%')
+            order by ${param2} desc limit #{param1}, 6;
+    </select>
+
+    <select id="getSearchedCategoriedDiaryList" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date, likes, comments
+        from DIARY where categoryid = #{param3} AND
+                       (userid like CONCAT('%',#{param4},'%') OR title like CONCAT('%',#{param4},'%'))
+            order by ${param3} desc limit #{param1}, 6;
     </select>
 </mapper>
