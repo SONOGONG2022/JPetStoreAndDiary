@@ -26,4 +26,5 @@ public interface DiaryMapper {
 
     void updateDiaryLikes(int no, int likesCnt);
     void updateDiaryComments(int no, int commentsCnt);
+    String getDiaryUser(int no);
 }

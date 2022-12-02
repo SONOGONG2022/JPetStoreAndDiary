@@ -89,4 +89,14 @@ public class DiaryService {
         int likesCnt = diaryLikesMapper.getLikesCount(likes.getD_no());
         diaryMapper.updateDiaryLikes(likes.getD_no(), likesCnt);
     }
+
+    @Transactional
+    public String getCommentUser(int c_no) {
+        return diaryCommentsMapper.getCommentUser(c_no);
+    }
+
+    @Transactional
+    public String getDiaryUser(int no) {
+        return diaryMapper.getDiaryUser(no);
+    }
 }

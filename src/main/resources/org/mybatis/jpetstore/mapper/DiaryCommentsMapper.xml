@@ -42,4 +42,8 @@
     <select id="getCommentsCount" parameterType="int" resultType="int">
         select count(*) from COMMENTS where d_no = #{no};
     </select>
+
+    <select id="getCommentUser" resultType="String">
+        select userid from COMMENTS where c_no = #{c_no};
+    </select>
 </mapper>

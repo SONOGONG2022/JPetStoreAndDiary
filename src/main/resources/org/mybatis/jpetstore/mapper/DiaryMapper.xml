@@ -68,4 +68,7 @@
     <update id="updateDiaryComments" parameterType="int">
         update DIARY set comments = #{param2} where no = #{param1};
     </update>
+    <select id="getDiaryUser" resultType="String">
+        select userid from DIARY where no = #{no};
+    </select>
 </mapper>

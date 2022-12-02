@@ -108,7 +108,7 @@
                 <b>&lt;&nbsp;${actionBean.diary.title}&nbsp;&gt;</b>
             </span>
             <span style="margin-left: 60%">
-                카테고리 : #${diary.categoryid}
+                카테고리 : #${actionBean.diary.categoryid}
             </span>
 
 
@@ -136,7 +136,7 @@
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="getEditDiaryForm">
-                        <stripes:param name="diary.no" value="${actionBean.diary.no}" />
+                        <stripes:param name="no" value="${actionBean.diary.no}" />
                         &nbsp;&nbsp;수정&nbsp;&nbsp;
                     </stripes:link>
                     </span>
@@ -144,7 +144,7 @@
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="deleteDiary">
-                        <stripes:param name="diary.no" value="${actionBean.diary.no}" />
+                        <stripes:param name="no" value="${actionBean.diary.no}" />
                         &nbsp;&nbsp;삭제&nbsp;&nbsp;
                     </stripes:link>
                         </span>
@@ -167,8 +167,9 @@
             <div class="comments">
                 <div>
                     <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                                  focus="">
+                                  >
                         <stripes:text size="100%" name="comments.comment"/>
+                        <stripes:param name="no" value="${actionBean.diary.no}" />
                         <br><br>
                         <stripes:submit name="insertComment" value="Submit" />
                     </stripes:form>
@@ -188,6 +189,7 @@
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="deleteLike">
+                        <stripes:param name="likes.d_no" value="${actionBean.diary.no}" />
                         💔
                     </stripes:link>
                     </span>
@@ -197,6 +199,7 @@
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                             event="insertLike">
+                        <stripes:param name="likes.d_no" value="${actionBean.diary.no}" />
                         💕
                     </stripes:link>
                     </span>
@@ -221,7 +224,8 @@
                             <stripes:link
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                                     event="updateComment">
-                                <stripes:param name="diary.no" value="${actionBean.diary.no}" />
+                                <stripes:param name="comments.c_no" value="${comments.c_no}" />
+                                <stripes:param name="no" value="${actionBean.diary.no}" />
                                 &nbsp;&nbsp;수정&nbsp;&nbsp;
                             </stripes:link>
                             </span>
@@ -230,6 +234,7 @@
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                                     event="deleteComment">
                                 <stripes:param name="comments.c_no" value="${comments.c_no}" />
+                                <stripes:param name="no" value="${actionBean.diary.no}" />
                                 &nbsp;&nbsp;삭제&nbsp;&nbsp;
                             </stripes:link>
                             </span>

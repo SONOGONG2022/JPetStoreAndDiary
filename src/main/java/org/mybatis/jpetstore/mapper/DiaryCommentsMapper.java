@@ -10,4 +10,5 @@ public interface DiaryCommentsMapper {
     void updateComment(Comments comments);
     void deleteComment(Comments comments);
     int getCommentsCount(int no);
+    String getCommentUser(int c_no);
 }
