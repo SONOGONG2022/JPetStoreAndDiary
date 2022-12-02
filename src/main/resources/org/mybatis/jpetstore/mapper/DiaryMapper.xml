@@ -94,4 +94,16 @@
                        (userid like CONCAT('%',#{param4},'%') OR title like CONCAT('%',#{param4},'%'))
             order by ${param3} desc limit #{param1}, 6;
     </select>
+    <select id="getDiaryCountByUserid" resultType="int">
+        select count(*) from DIARY where userid = #{userid}
+    </select>
+
+    <select id="getDiaryListByUserid" resultType="Diary">
+        select no, imgurl, title, categoryid, userid, date,
+            (select count(*) from LIKES where d_no = no) as likes,
+            (select count(*) from COMMENTS where d_no = no) as comments from DIARY
+        where userid = #{param1}
+        order by date desc limit #{param2}, 5;
+    </select>
+
 </mapper>

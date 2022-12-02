@@ -129,11 +129,13 @@
             <div class="card-wrap">
                 <stripes:link class="thumbnail" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
                     <stripes:param name="no" value="${diary.no}" />
+                    <stripes:param name="page2" value="1" />
                     <img src="https://share.shbox.kr/jpetstore_war/static/${diary.imgurl}" style="width:100%; height: 100%; border-radius: 10px 10px 0 0;">
                 </stripes:link>
                 <div class="detail">
                     <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
                         <stripes:param name="no" value="${diary.no}" />
+                        <stripes:param name="page2" value="1" />
                         <h4>${diary.title}</h4>
                     </stripes:link>
                 </div>

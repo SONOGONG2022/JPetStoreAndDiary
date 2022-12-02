@@ -61,7 +61,6 @@ public class DiaryService {
 
     public List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments){return diaryMapper.getCategoriedDiaryList(page, categoryid, orderLikesOrComments);}
 
-
     public List<Diary> getSearchedDiaryList(int page, String orderLikesOrComments,String keyword){
         return diaryMapper.getSearchedDiaryList(page,orderLikesOrComments,keyword);
     }
@@ -74,6 +73,9 @@ public class DiaryService {
     public int getSearchedCategoriedDiaryListCount(String categoryid,String keyword){
         return diaryMapper.getSearchedCategoriedDiaryCount(categoryid,keyword);
     }
+    public int getDiaryCountByUserid(String userid){return diaryMapper.getDiaryCountByUserid(userid);}
+
+    public List<Diary> getDiaryListByUserid(String userid, int offset){ return diaryMapper.getDiaryListByUserid(userid, offset);}
 
     @Transactional
     public void insertComment(Comments comments){

@@ -31,6 +31,8 @@ public class DiaryActionBean extends AbstractActionBean{
     //diary no
     private int no;
     private int page;
+    private int page2;
+
     // 업로드된 이미지
     private FileBean petImage;
     // paging 처리
@@ -41,6 +43,14 @@ public class DiaryActionBean extends AbstractActionBean{
     private boolean prev;
     private Likes likes = new Likes();
     private int clickedLike;
+
+    // paging 처리(현재 다이어리의 작성자가 쓴 다이어리 리스트)
+    private int totalCount2;
+    private int beginPage2;
+    private int endPage2;
+    private boolean next2;
+    private boolean prev2;
+
     // 정렬 기준 가지고 있는 변수
     private String orderCategory;
     private String orderLikesOrComments;
@@ -56,12 +66,20 @@ public class DiaryActionBean extends AbstractActionBean{
     public void setOrderCategory(String orderCategory) {this.orderCategory = orderCategory;}
     public String getOrderLikesOrComments() {return orderLikesOrComments; }
     public void setOrderLikesOrComments(String orderLikesOrComments) {this.orderLikesOrComments = orderLikesOrComments;}
+
     public boolean getNext() {return next;}
     public boolean getPrev() {return prev;}
     public int getBeginPage() {return beginPage;}
     public int getEndPage() {return endPage;}
     public void setPage(int page){this.page=page;}
     public int getPage(){return this.page;}
+    public boolean getNext2() {return next2;}
+    public boolean getPrev2() {return prev2;}
+    public int getBeginPage2() {return beginPage2;}
+    public int getEndPage2() {return endPage2;}
+    public void setPage2(int page2){this.page2=page2;}
+    public int getPage2(){return this.page2;}
+
     public void setClickedLike(int clickedLike){this.clickedLike=clickedLike;}
     public int getClickedLike(){return clickedLike;}
     public Comments getComments() {return comments;}
@@ -73,6 +91,8 @@ public class DiaryActionBean extends AbstractActionBean{
     public void setDiary(Diary diary){this.diary=diary;}
     public List<Diary> getDiaryList(){return diaryList;}
     public List<Comments> getCommentsList(){return commentsList;}
+    private List<Diary> diaryListByUserid;
+    public List<Diary> getDiaryListByUserid(){return diaryListByUserid;}
     public String getImgurl(){return diary.getImgurl();}
     public void setImgurl(String imgurl){diary.setImgurl(imgurl);}
     public FileBean getPetImage() {return petImage;}
@@ -91,6 +111,11 @@ public class DiaryActionBean extends AbstractActionBean{
         if (no == 0)
             // no 파라미터가 넘어오지 않았을 경우, 잘못된 접근임!!
             return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
+
+        paging2();
+        int offset = (page2-1) * 5;
+        diaryListByUserid = diaryService.getDiaryListByUserid(diary.getUserid(), offset);
+
         diary=diaryService.getDiary(no);
         commentsList = diaryService.getCommentsList(no);
         clickedLike = 0;
@@ -102,6 +127,25 @@ public class DiaryActionBean extends AbstractActionBean{
         }
         return new ForwardResolution(VIEW_DIARY_CONTENT);
     }
+    public String getUserid(){return diary.getUserid();}
+    public void setUserid(String userid){diary.setUserid(userid);}
+
+    public String getDate(){return diary.getDate();}
+    public void setDate(String date){diary.setDate(date);}
+
+    public String getTitle(){return diary.getTitle();}
+    public void setTitle(String title){diary.setTitle(title);}
+
+    public String getContent(){return diary.getContent();}
+    public void setContent(String content){diary.setContent(content);}
+
+    public int getViews(){return diary.getViews();}
+    public void setViews(int views){diary.setViews(views);}
+
+    public String getCategoryid(){return diary.getCategoryid();}
+    public void setCategoryid(String categoryid){diary.setCategoryid(categoryid);}
+    private int doLike=0;
+    public void setDoLike(int doLike){this.doLike=doLike;}
 
     /**
      * param1 : no
@@ -248,6 +292,23 @@ public class DiaryActionBean extends AbstractActionBean{
         } else {
             diaryList=diaryService.getSearchedCategoriedDiaryList(offset, orderCategory, orderLikesOrComments, keyword);
         }
+    }
+
+    public void paging2() {
+        totalCount2 = diaryService.getDiaryCountByUserid(diary.getUserid());
+        endPage2 = ((int)Math.ceil(page2 / (double)10)) * 10;
+
+        beginPage2 = endPage2 - (10 - 1);
+
+        int totalPage = (int)Math.ceil(totalCount2 / (double)5);
+
+        if (totalPage < endPage2) {
+            endPage2 = totalPage;
+            next2 = false;
+        } else {
+            next2 = true;
+        }
+        prev2 = beginPage2!=1;
     }
     public void fileUpload() throws IOException {
         String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());  //현재시간

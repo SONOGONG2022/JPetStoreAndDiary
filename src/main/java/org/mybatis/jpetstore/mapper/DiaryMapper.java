@@ -31,4 +31,7 @@ public interface DiaryMapper {
     void updateDiaryLikes(int no, int likesCnt);
     void updateDiaryComments(int no, int commentsCnt);
     String getDiaryUser(int no);
+    int getDiaryCountByUserid(String userid);
+
+    List<Diary> getDiaryListByUserid(String userid, int page);
 }
