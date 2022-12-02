@@ -180,7 +180,7 @@
                 <b>&lt;&nbsp;${actionBean.diary.title}&nbsp;&gt;</b>
             </span>
             <span style="margin-left: 60%">
-                카테고리 : ${actionBean.diary.categoryid}
+                카테고리 : #${actionBean.diary.categoryid}
             </span>
 
 
