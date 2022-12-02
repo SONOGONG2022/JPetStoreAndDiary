@@ -112,11 +112,11 @@ public class DiaryActionBean extends AbstractActionBean{
             // no 파라미터가 넘어오지 않았을 경우, 잘못된 접근임!!
             return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
 
+        diary=diaryService.getDiary(no);
         paging2();
         int offset = (page2-1) * 5;
         diaryListByUserid = diaryService.getDiaryListByUserid(diary.getUserid(), offset);
 
-        diary=diaryService.getDiary(no);
         commentsList = diaryService.getCommentsList(no);
         clickedLike = 0;
         if(isAuthenticated()) {

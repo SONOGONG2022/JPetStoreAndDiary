@@ -119,7 +119,8 @@
                         <c:choose>
                             <c:when test ="${diary.no == actionBean.diary.no}">
                                 <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
-                                <stripes:param name="diary.no" value="${diary.no}" />
+                                <stripes:param name="no" value="${diary.no}" />
+                                    <h5 style="color:black; display:inline">[${diary.categoryid}]</h5>
                                 <h5 style="color:black; display:inline">${diary.title}</h5>
                                 <h6 style="color:mediumblue; display:inline">(댓글:${diary.comments}&nbsp 좋아요:${diary.likes})</h6>
                                 </stripes:link></td>
@@ -127,7 +128,8 @@
                             </c:when>
                             <c:otherwise>
                                 <stripes:link class="detail-box" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
-                                <stripes:param name="diary.no" value="${diary.no}" />
+                                <stripes:param name="no" value="${diary.no}" />
+                                    <h5 style="color:dimgray;  display:inline">[${diary.categoryid}]</h5>
                                 <h5 style="color:dimgray;  display:inline">${diary.title}</h5>
                                 <h6 style="color:royalblue; display:inline">(댓글:${diary.comments}&nbsp 좋아요:${diary.likes})</h6>
                                 </stripes:link></td>
@@ -180,7 +182,7 @@
                 <b>&lt;&nbsp;${actionBean.diary.title}&nbsp;&gt;</b>
             </span>
             <span style="margin-left: 60%">
-                카테고리 : #${actionBean.diary.categoryid}
+                <br>카테고리 : #${actionBean.diary.categoryid}
             </span>
 
 
