@@ -8,6 +8,7 @@ import org.mybatis.jpetstore.domain.Likes;
 import org.mybatis.jpetstore.service.DiaryService;
 
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -147,6 +148,21 @@ public class DiaryActionBean extends AbstractActionBean{
     private int doLike=0;
     public void setDoLike(int doLike){this.doLike=doLike;}
 
+    public Resolution viewMyDiary(){
+        if (!isAuthenticated())
+            return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
+        int myCnt = diaryService.getDiaryCountByUserid(myUserid);
+        if(myCnt>0){
+            int memory =diaryService.getLatestMyDiaryNo(myUserid);
+            clear();
+            no = memory;
+            return new RedirectResolution(DiaryActionBean.class);
+        }
+        else{
+            return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
+        }
+    }
+
     /**
      * param1 : no
      * @return Forward, 양육일기 수정 폼
@@ -162,7 +178,7 @@ public class DiaryActionBean extends AbstractActionBean{
      */
     public Resolution getNewDiaryForm() {
         if (!isAuthenticated())
-            return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
+            return new RedirectResolution(AccountActionBean.class);
         clear();
         return new ForwardResolution(VIEW_NEW_DIARY_FORM);
     }
@@ -183,10 +199,12 @@ public class DiaryActionBean extends AbstractActionBean{
 //        }
         diary.setImgurl("default.png");
         diaryService.insertDiary(diary);
+        int memory = diaryService.getLatestMyDiaryNo(myUserid);
         // 시간적 여유가 있다면 insert 하고 key를 반환받은 다음 해당 게시글로 이동할 수 있도록 로직 추가
         // 그러기 위해서는 no를 따로 가지고 있는 것이 편함.
         clear();
-        return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
+        no=memory;
+        return new RedirectResolution(DiaryActionBean.class);
     }
     /**
      * param : Diary[imgurl, title, content, categoryid, userid]
@@ -359,6 +377,9 @@ public class DiaryActionBean extends AbstractActionBean{
     public Resolution insertComment(){
         if (!isAuthenticated() || no == 0)
             return new RedirectResolution(DiaryActionBean.class);
+        String cont = comments.getComment();
+        cont.replace("\n","<br>");
+        comments.setComment(cont);
         comments.setUserid(myUserid);
         comments.setD_no(no);
         diaryService.insertComment(comments);
@@ -374,6 +395,9 @@ public class DiaryActionBean extends AbstractActionBean{
     public Resolution updateComment(){
         if (!isAuthenticated() || no == 0 || comments.getC_no() == 0 ||isMyDiaryOrComments(diaryService.getCommentUser(comments.getC_no())))
             return new RedirectResolution(DiaryActionBean.class);
+        String cont = comments.getComment();
+        cont.replace("\n","<br>");
+        comments.setComment(cont);
         comments.setUserid(myUserid);
         diaryService.updateComment(comments);
         int memory = no;

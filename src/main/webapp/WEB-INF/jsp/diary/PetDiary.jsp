@@ -251,6 +251,7 @@
         <div>
             <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean">
                 <stripes:text size="30%" name="keyword"/>
+                <stripes:param name="page" value="1"/>
                 <stripes:submit name="viewDiaryBoard" value="Search" />
             </stripes:form>
         </div>

@@ -96,4 +96,8 @@
         order by date desc limit #{param2}, 5;
     </select>
 
+    <select id="getLatestMyDiaryNo" resultType="int" parameterType="String">
+        select no from DIARY where userid = #{userid} order by no desc limit 0, 1;
+    </select>
+
 </mapper>

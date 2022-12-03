@@ -99,4 +99,6 @@ public class DiaryService {
     public String getDiaryUser(int no) {
         return diaryMapper.getDiaryUser(no);
     }
+
+    public int getLatestMyDiaryNo(String userid){return diaryMapper.getLatestMyDiaryNo(userid);}
 }

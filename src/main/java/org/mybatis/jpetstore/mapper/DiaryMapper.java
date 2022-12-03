@@ -22,4 +22,6 @@ public interface DiaryMapper {
     String getDiaryUser(int no);
     int getDiaryCountByUserid(String userid);
     List<Diary> getDiaryListByUserid(String userid, int page);
+
+    int getLatestMyDiaryNo(String userid);
 }
