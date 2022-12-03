@@ -233,22 +233,13 @@ public class DiaryActionBean extends AbstractActionBean{
         }
         paging();
         int offset = (page - 1) * 6;
-        if(keyword==null){
-            setDiaryList(offset);
-        }
-        else{
-            setSearchedDiaryList(offset);
-        }
+        diaryList = diaryService.getDiaryList(offset, orderCategory, orderLikesOrComments, keyword);
         return new ForwardResolution(VIEW_PET_DIARY_BOARD);
     }
 
     public void paging() {
-        if(keyword==null){
-            setDiaryCount();
-        }
-        else{
-            setSearchedDiaryCount();
-        }
+        totalCount = diaryService.getDiaryCount(orderCategory, keyword);
+
         endPage = ((int)Math.ceil(page / (double)10)) * 10;
 
         beginPage = endPage - (10 - 1);
@@ -262,36 +253,6 @@ public class DiaryActionBean extends AbstractActionBean{
             next = true;
         }
         prev = beginPage!=1;
-    }
-    public void setDiaryCount(){
-        if(orderCategory==null || orderCategory.equals("ALL")){
-            totalCount = diaryService.getDiaryCount();
-        }
-        else{
-            totalCount = diaryService.getCategoriedDiaryCount(orderCategory);
-        }
-    }
-    public void setSearchedDiaryCount(){
-        if(orderCategory==null || orderCategory.equals("ALL")){
-            totalCount = diaryService.getSearchedDiaryListCount(keyword);
-        }
-        else{
-            totalCount = diaryService.getSearchedCategoriedDiaryListCount(orderCategory,keyword);
-        }
-    }
-    public void setDiaryList(int offset){
-        if (orderCategory == null || orderCategory.equals("ALL")) {
-            diaryList=diaryService.getDiaryList(orderLikesOrComments, offset);
-        } else {
-            diaryList=diaryService.getCategoriedDiaryList(offset, orderCategory, orderLikesOrComments);
-        }
-    }
-    public void setSearchedDiaryList(int offset){
-        if (orderCategory == null || orderCategory.equals("ALL")) {
-            diaryList=diaryService.getSearchedDiaryList(offset, orderLikesOrComments, keyword);
-        } else {
-            diaryList=diaryService.getSearchedCategoriedDiaryList(offset, orderCategory, orderLikesOrComments, keyword);
-        }
     }
 
     public void paging2() {

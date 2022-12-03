@@ -13,25 +13,13 @@ public interface DiaryMapper {
 
     void deleteDiary(int no);
 
-    int getDiaryCount();
+    int getDiaryCount(String orderCategory, String keyword);
 
-    List<Diary> getDiaryList(String orderLikesOrComments, int page);
-
-    int getCategoriedDiaryCount(String categoryid);
-
-    List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments);
-
-    List<Diary> getSearchedDiaryList(int page, String orderLikesOrComments,String keyword);
-    int getSearchedDiaryCount(String keyword);
-    List<Diary> getSearchedCategoriedDiaryList(int page,String categoryid, String orderLikesOrComments,String keyword);
-    int getSearchedCategoriedDiaryCount(String categoryid, String keyword);
-
-    List<Diary> getAnotherDiaryList(Diary diary);
+    List<Diary> getDiaryList(int page, String orderCategory, String orderLikesOrComments, String keyword);
 
     void updateDiaryLikes(int no, int likesCnt);
     void updateDiaryComments(int no, int commentsCnt);
     String getDiaryUser(int no);
     int getDiaryCountByUserid(String userid);
-
     List<Diary> getDiaryListByUserid(String userid, int page);
 }

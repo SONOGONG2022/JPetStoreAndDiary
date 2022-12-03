@@ -41,38 +41,22 @@ public class DiaryService {
     }
 
     //not used yet
-    public List<Diary> getDiaryList(String orderLikesOrComments, int page){
-        return diaryMapper.getDiaryList(orderLikesOrComments, page);
+    public List<Diary> getDiaryList(int page, String orderCategory, String orderLikesOrComments, String keyword){
+        return diaryMapper.getDiaryList(page, orderCategory, orderLikesOrComments, keyword);
     }
 
     public List<Comments> getCommentsList(int d_no){
         return diaryCommentsMapper.getDiaryComments(d_no);
     }
 
-    public int getDiaryCount() {
-        return diaryMapper.getDiaryCount();
+    public int getDiaryCount(String orderCategory, String keyword) {
+        return diaryMapper.getDiaryCount(orderCategory, keyword);
     }
 
     public int didClickedLike(Likes likes){
         return diaryLikesMapper.didClickedLike(likes);
     }
 
-    public int getCategoriedDiaryCount(String categoryid){return diaryMapper.getCategoriedDiaryCount(categoryid);}
-
-    public List<Diary> getCategoriedDiaryList(int page, String categoryid, String orderLikesOrComments){return diaryMapper.getCategoriedDiaryList(page, categoryid, orderLikesOrComments);}
-
-    public List<Diary> getSearchedDiaryList(int page, String orderLikesOrComments,String keyword){
-        return diaryMapper.getSearchedDiaryList(page,orderLikesOrComments,keyword);
-    }
-    public int getSearchedDiaryListCount(String keyword){
-        return diaryMapper.getSearchedDiaryCount(keyword);
-    }
-    public List<Diary> getSearchedCategoriedDiaryList(int page,String categoryid, String orderLikesOrComments,String keyword){
-        return diaryMapper.getSearchedCategoriedDiaryList(page,categoryid,orderLikesOrComments,keyword);
-    }
-    public int getSearchedCategoriedDiaryListCount(String categoryid,String keyword){
-        return diaryMapper.getSearchedCategoriedDiaryCount(categoryid,keyword);
-    }
     public int getDiaryCountByUserid(String userid){return diaryMapper.getDiaryCountByUserid(userid);}
 
     public List<Diary> getDiaryListByUserid(String userid, int offset){ return diaryMapper.getDiaryListByUserid(userid, offset);}

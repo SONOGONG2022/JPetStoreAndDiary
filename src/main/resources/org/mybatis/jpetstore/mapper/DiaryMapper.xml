@@ -44,21 +44,32 @@
     <select id="getDiaryList" resultType="Diary">
         select no, imgurl, title, categoryid, userid, date, likes, comments
         from DIARY
-        order by ${param1} desc limit #{param2}, 6;
+        where 1 = 1
+        <if test='param2 != null and param2 != "ALL"'>
+            and categoryid = #{param2}
+        </if>
+        <if test="param4 != null">
+            and (userid like CONCAT('%',#{param4},'%') OR title like CONCAT('%',#{param4},'%'))
+        </if>
+        order by ${param3} desc limit #{param1}, 6;
     </select>
 
     <select id="getCategoriedDiaryList" resultType="Diary">
         select no, imgurl, title, categoryid, userid, date, likes, comments
-        from DIARY where categoryid = #{param2}
+        from DIARY
         order by ${param3} desc limit #{param1}, 6;
     </select>
 
     <select id="getDiaryCount" resultType="int">
-        select count(*) from DIARY;
-    </select>
-
-    <select id="getCategoriedDiaryCount" resultType="int" parameterType="String">
-        select count(*) from DIARY where categoryid = #{categoryid};
+        select count(*) from DIARY
+        where 1 = 1
+        <if test='param1 != null and param2 != "ALL"'>
+            and categoryid = #{param1}
+        </if>
+        <if test="param2 != null">
+            and (userid like CONCAT('%',#{param2},'%') OR title like CONCAT('%',#{param2},'%'))
+        </if>
+        ;
     </select>
 
     <update id="updateDiaryLikes" parameterType="int">
@@ -73,27 +84,6 @@
         select userid from DIARY where no = #{no};
     </select>
 
-    <select id="getSearchedDiaryCount" resultType="int" parameterType="String">
-        select count(*) from DIARY where userid like CONCAT('%',#{keyword},'%') OR title like CONCAT('%',#{keyword},'%');
-    </select>
-
-    <select id="getSearchedCategoriedDiaryCount" resultType="int">
-        select count(*) from DIARY where categoryid = #{param1} AND
-            (userid like CONCAT('%',#{param2},'%') OR title like CONCAT('%',#{param2},'%'));
-    </select>
-
-    <select id="getSearchedDiaryList" resultType="Diary">
-        select no, imgurl, title, categoryid, userid, date, likes, comments
-        from DIARY where userid like CONCAT('%',#{param3},'%') OR title like CONCAT('%',#{param3},'%')
-            order by ${param2} desc limit #{param1}, 6;
-    </select>
-
-    <select id="getSearchedCategoriedDiaryList" resultType="Diary">
-        select no, imgurl, title, categoryid, userid, date, likes, comments
-        from DIARY where categoryid = #{param2} AND
-                       (userid like CONCAT('%',#{param4},'%') OR title like CONCAT('%',#{param4},'%'))
-            order by ${param3} desc limit #{param1}, 6;
-    </select>
     <select id="getDiaryCountByUserid" resultType="int">
         select count(*) from DIARY where userid = #{userid}
     </select>
