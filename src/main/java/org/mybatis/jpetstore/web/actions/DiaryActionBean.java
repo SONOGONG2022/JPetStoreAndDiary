@@ -109,7 +109,8 @@ public class DiaryActionBean extends AbstractActionBean{
      */
     @DefaultHandler
     public Resolution getDiaryContent(){
-        if (no == 0)
+        int exist=diaryService.doesDiaryExist(no);
+        if (no == 0 || exist == 0)
             // no 파라미터가 넘어오지 않았을 경우, 잘못된 접근임!!
             return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
 
@@ -168,7 +169,8 @@ public class DiaryActionBean extends AbstractActionBean{
      * @return Forward, 양육일기 수정 폼
      */
     public Resolution getEditDiaryForm(){
-        if (!isAuthenticated() || !isMyDiaryOrComments(diaryService.getDiaryUser(no)) || no == 0)
+        int exist=diaryService.doesDiaryExist(no);
+        if (!isAuthenticated() || !isMyDiaryOrComments(diaryService.getDiaryUser(no)) || no == 0 || exist==0)
             return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
         diary=diaryService.getDiary(no);
         return new ForwardResolution(VIEW_EDIT_DIARY_FORM);

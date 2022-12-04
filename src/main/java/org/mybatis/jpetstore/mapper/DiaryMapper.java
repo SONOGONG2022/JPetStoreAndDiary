@@ -25,4 +25,6 @@ public interface DiaryMapper {
 
     int getLatestMyDiaryNo(String userid);
     String getFilename(int no);
+
+    int doesDiaryExist(int no);
 }

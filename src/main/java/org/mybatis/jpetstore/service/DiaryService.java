@@ -102,4 +102,6 @@ public class DiaryService {
 
     public int getLatestMyDiaryNo(String userid){return diaryMapper.getLatestMyDiaryNo(userid);}
     public String getFilename(int no) { return diaryMapper.getFilename(no); }
+
+    public int doesDiaryExist(int no){return diaryMapper.doesDiaryExist(no);}
 }

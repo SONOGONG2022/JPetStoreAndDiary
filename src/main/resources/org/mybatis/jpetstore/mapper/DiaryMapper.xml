@@ -102,4 +102,7 @@
     <select id="getFilename" resultType="String">
         select imgurl from DIARY where no = #{no};
     </select>
+    <select id="doesDiaryExist" parameterType="int" resultType="int">
+        select exists(select * from DIARY where no=#{no})
+    </select>
 </mapper>
