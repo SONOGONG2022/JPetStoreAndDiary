@@ -256,6 +256,7 @@
             </stripes:form>
         </div>
     </div>
+    <br>
     <div class="page">
         <c:if test="${actionBean.prev}">
             <stripes:link
