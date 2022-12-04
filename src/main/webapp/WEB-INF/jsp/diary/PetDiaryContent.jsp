@@ -244,7 +244,7 @@
         </div>
         <br><br>
         <div class="content-wrap">
-            <span style="white-space:pre;">${actionBean.diary.content}</span>
+            <span style="white-space:pre-wrap; word-break: break-all">${actionBean.diary.content}</span>
         </div>
 
         <c:if test="${sessionScope.accountBean != null}">
