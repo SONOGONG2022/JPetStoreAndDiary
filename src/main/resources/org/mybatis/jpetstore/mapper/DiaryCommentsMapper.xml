@@ -46,4 +46,8 @@
     <select id="getCommentUser" resultType="String">
         select userid from COMMENTS where c_no = #{c_no};
     </select>
+
+    <select id="getComment" resultType="Comments">
+        select c_no, comment, userid, d_no from COMMENTS where c_no = #{c_no};
+    </select>
 </mapper>

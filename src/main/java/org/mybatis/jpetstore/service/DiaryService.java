@@ -101,4 +101,5 @@ public class DiaryService {
     }
 
     public int getLatestMyDiaryNo(String userid){return diaryMapper.getLatestMyDiaryNo(userid);}
+    public Comments getComment(int c_no) {return diaryCommentsMapper.getComment(c_no);}
 }
