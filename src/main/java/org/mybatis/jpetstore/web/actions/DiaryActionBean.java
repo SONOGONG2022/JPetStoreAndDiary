@@ -190,7 +190,7 @@ public class DiaryActionBean extends AbstractActionBean{
     public Resolution insertDiary(){
         if (!isAuthenticated())
             return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
-        //테스트할 때는 톰캣이 종료 및 실행될때마다 정적 리소스가 초기화 되기 때문에, diary.imgurl = "default.png"로 다 넣으시면 됩니다
+//        테스트할 때는 톰캣이 종료 및 실행될때마다 정적 리소스가 초기화 되기 때문에, diary.imgurl = "default.png"로 다 넣으시면 됩니다
 //        try {
 //            fileUpload();
 //        } catch (IOException e) {
@@ -199,9 +199,7 @@ public class DiaryActionBean extends AbstractActionBean{
 //        }
         diary.setImgurl("default.png");
         diaryService.insertDiary(diary);
-        int memory = diaryService.getLatestMyDiaryNo(myUserid);
-        // 시간적 여유가 있다면 insert 하고 key를 반환받은 다음 해당 게시글로 이동할 수 있도록 로직 추가
-        // 그러기 위해서는 no를 따로 가지고 있는 것이 편함.
+        int memory = diary.getNo();
         clear();
         no=memory;
         return new RedirectResolution(DiaryActionBean.class);
@@ -234,6 +232,8 @@ public class DiaryActionBean extends AbstractActionBean{
     public Resolution deleteDiary(){
         if (!isAuthenticated() || !isMyDiaryOrComments(diary.getUserid()) || no == 0)
             return new ForwardResolution(MAIN);
+        //파일 삭제 메소드가 추가되었습니다. 최종적으로 주석을 해제하시면 됩니다.
+        //fileDelete(diaryService.getFilename(no));
         diaryService.deleteDiary(no);
         clear();
         return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
@@ -289,6 +289,7 @@ public class DiaryActionBean extends AbstractActionBean{
         }
         prev2 = beginPage2!=1;
     }
+
     public void fileUpload() throws IOException {
         String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());  //현재시간
         String saveDir = context.getRequest().getSession().getServletContext().getRealPath("/static");
@@ -309,6 +310,14 @@ public class DiaryActionBean extends AbstractActionBean{
             } catch (IllegalStateException | IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void fileDelete(String filename){
+        String saveDir = context.getRequest().getSession().getServletContext().getRealPath("/static");
+        File file = new File(saveDir + "/" + filename);
+        if (file.exists()) {
+            file.delete();
         }
     }
 
@@ -422,6 +431,7 @@ public class DiaryActionBean extends AbstractActionBean{
     public void clear() {
         no = 0;
         page = 1;
+        page2 = 1;
 
         petImage = null;
 
@@ -430,6 +440,12 @@ public class DiaryActionBean extends AbstractActionBean{
         endPage = 0;
         next = false;
         prev = false;
+
+        totalCount2 = 0;
+        beginPage2 = 0;
+        endPage2 = 0;
+        next2 = false;
+        prev2 = false;
 
         likes = new Likes();
         comments = new Comments();

@@ -28,7 +28,7 @@
         from DIARY where no = #{no};
     </select>
 
-    <insert id="insertDiary" parameterType="Diary">
+    <insert id="insertDiary" parameterType="Diary" useGeneratedKeys="true" keyProperty="no">
         insert into DIARY (userid, title, content, categoryid, imgurl)
         VALUES (#{userid}, #{title}, #{content}, #{categoryid}, #{imgurl});
     </insert>
@@ -89,9 +89,8 @@
     </select>
 
     <select id="getDiaryListByUserid" resultType="Diary">
-        select no, imgurl, title, categoryid, userid, date,
-            (select count(*) from LIKES where d_no = no) as likes,
-            (select count(*) from COMMENTS where d_no = no) as comments from DIARY
+        select no, imgurl, title, categoryid, userid, date, likes, comments
+        from DIARY
         where userid = #{param1}
         order by date desc limit #{param2}, 5;
     </select>
@@ -100,4 +99,7 @@
         select no from DIARY where userid = #{userid} order by no desc limit 0, 1;
     </select>
 
+    <select id="getFilename" resultType="String">
+        select imgurl from DIARY where no = #{no};
+    </select>
 </mapper>

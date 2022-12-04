@@ -7,7 +7,7 @@ import java.util.List;
 public interface DiaryMapper {
 
     Diary getDiaryContent(int no);
-    void insertDiary(Diary diary);
+    int insertDiary(Diary diary);
 
     void updateDiary(Diary diary);
 
@@ -24,4 +24,5 @@ public interface DiaryMapper {
     List<Diary> getDiaryListByUserid(String userid, int page);
 
     int getLatestMyDiaryNo(String userid);
+    String getFilename(int no);
 }

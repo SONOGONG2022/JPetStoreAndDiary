@@ -24,8 +24,8 @@ public class DiaryService {
     }
 
     @Transactional
-    public void insertDiary(Diary diary){
-        diaryMapper.insertDiary(diary);
+    public int insertDiary(Diary diary){
+        return diaryMapper.insertDiary(diary);
     }
 
     @Transactional
@@ -101,4 +101,5 @@ public class DiaryService {
     }
 
     public int getLatestMyDiaryNo(String userid){return diaryMapper.getLatestMyDiaryNo(userid);}
+    public String getFilename(int no) { return diaryMapper.getFilename(no); }
 }
