@@ -107,6 +107,19 @@
     }
 </style>
 
+<script>
+    // 엔터키 제출 방지
+    function captureReturnKey(e) {
+        if(e.keyCode==13 && e.target.type != 'textarea')
+            return false;
+    }
+    function checkEmpty(e){
+        if(document.getElementById('content').value == ''){
+            e.preventDefault()
+            alert('내용을 입력하세요')}
+    }
+</script>
+
 <div id="Catalog">
     <div class="diary-wrap">
         <div class="head-wrap">
@@ -253,8 +266,8 @@
             <br>
             <div class="comments">
                 <div>
-                    <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean">
-                        <stripes:text size="100%" name="comments.comment"/>
+                    <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" onkeydown="return captureReturnKey(event);" onsubmit="checkEmpty(event)">
+                        <stripes:text size="100%" name="comments.comment" id="content"/>
                         <br><br>
                         <stripes:submit name="insertComment" value="Submit" />
                     </stripes:form>

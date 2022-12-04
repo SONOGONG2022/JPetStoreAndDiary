@@ -11,6 +11,19 @@
 <%--    Return to ${actionBean.product.productId}--%>
 <%--</stripes:link></div>--%>
 
+<script>
+    // 엔터키 제출 방지
+    function captureReturnKey(e) {
+        if(e.keyCode==13 && e.target.type != 'textarea')
+            return false;
+    }
+    function checkEmpty(e){
+        if(document.getElementById('content').value == ''){
+            e.preventDefault()
+            alert('내용을 입력하세요')}
+    }
+</script>
+
 <div id="Catalog">
 
     <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
@@ -22,7 +35,7 @@
         <div>
             <span style="font-size: 30px" align="left">
                 <span class="title">
-                        <stripes:text name="comments.comment" id="comment" value="${actionBean.comments.comment}"
+                        <stripes:text name="comments.comment" id="content" value="${actionBean.comments.comment}"
                           style="
                                        font-size: 20px;
                                        width: 50%;
