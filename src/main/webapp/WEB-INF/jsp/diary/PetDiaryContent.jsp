@@ -309,8 +309,8 @@
                             <span style="margin-left: 87%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa">
                             <stripes:link
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
-                                    event="updateComment">
-                                <stripes:param name="diary.no" value="${actionBean.diary.no}" />
+                                    event="getUpdateCommentForm">
+                                <stripes:param name="comments.c_no" value="${comments.c_no}" />
                                 &nbsp;&nbsp;수정&nbsp;&nbsp;
                             </stripes:link>
                             </span>
@@ -319,6 +319,7 @@
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                                     event="deleteComment">
                                 <stripes:param name="comments.c_no" value="${comments.c_no}" />
+                                <stripes:param name="comments.d_no" value="${actionBean.diary.no}" />
                                 &nbsp;&nbsp;삭제&nbsp;&nbsp;
                             </stripes:link>
                             </span>

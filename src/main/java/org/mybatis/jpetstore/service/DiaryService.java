@@ -104,4 +104,5 @@ public class DiaryService {
     public String getFilename(int no) { return diaryMapper.getFilename(no); }
 
     public int doesDiaryExist(int no){return diaryMapper.doesDiaryExist(no);}
+    public Comments getComment(int c_no) {return diaryCommentsMapper.getComment(c_no);}
 }

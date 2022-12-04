@@ -27,6 +27,7 @@ public class DiaryActionBean extends AbstractActionBean{
     private static final String VIEW_DIARY_CONTENT = "/WEB-INF/jsp/diary/PetDiaryContent.jsp";
     private static final String VIEW_NEW_DIARY_FORM="/WEB-INF/jsp/diary/NewDiaryForm.jsp";
     private static final String VIEW_EDIT_DIARY_FORM="/WEB-INF/jsp/diary/EditDiaryForm.jsp";
+    private static final String VIEW_EDIT_COMMENTS_FORM="/WEB-INF/jsp/diary/UpdateCommentForm.jsp";
     private static final String MAIN="/WEB-INF/jsp/catalog/Main.jsp";
 
     //diary no
@@ -399,12 +400,19 @@ public class DiaryActionBean extends AbstractActionBean{
         no = memory;
         return new RedirectResolution(DiaryActionBean.class);
     }
+    public Resolution getUpdateCommentForm(){
+        if (!isAuthenticated() || comments.getC_no() == 0 || !isMyDiaryOrComments(diaryService.getCommentUser(comments.getC_no())) || no == 0)
+            return new RedirectResolution(DiaryActionBean.class, "getDiaryContent");
+
+        comments = diaryService.getComment(comments.getC_no());
+        return new ForwardResolution(VIEW_EDIT_COMMENTS_FORM);
+    }
     /**
      * param : no, Comments[c_no]
      * @return Redirect, 덧글 수정
      */
     public Resolution updateComment(){
-        if (!isAuthenticated() || no == 0 || comments.getC_no() == 0 ||isMyDiaryOrComments(diaryService.getCommentUser(comments.getC_no())))
+        if (!isAuthenticated() || no == 0 || comments.getC_no() == 0 || !isMyDiaryOrComments(diaryService.getCommentUser(comments.getC_no())))
             return new RedirectResolution(DiaryActionBean.class);
         String cont = comments.getComment();
         cont.replace("\n","<br>");
