@@ -137,9 +137,9 @@
                         <stripes:param name="no" value="${diary.no}" />
                         <stripes:param name="page2" value="1" />
                         <b  style="color:black;">
-                        [${diary.categoryid}]
-                        ${diary.title}
-                        [${diary.comments}]
+                            <span>[${diary.categoryid}]</span>
+                            <span style="display: inline-block;  max-width:400px; overflow:hidden;text-overflow:ellipsis;">${diary.title}</span>
+                            <span>[${diary.comments}]</span>
                         </b>
                     </stripes:link>
                         <span style="float: right">
@@ -154,9 +154,9 @@
                         <stripes:link class="thumbnail" beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" event="getDiaryContent">
                             <stripes:param name="no" value="${diary.no}" />
                             <stripes:param name="page2" value="1" />
-                            [${diary.categoryid}]
-                            ${diary.title}
-                            [${diary.comments}]
+                            <span>[${diary.categoryid}]</span>
+                            <span style="display: inline-block;  max-width:400px; overflow:hidden;text-overflow:ellipsis;">${diary.title}</span>
+                            <span>[${diary.comments}]</span>
                         </stripes:link>
                         <span style="float: right">
                             ${diary.likes} 💕&nbsp;&nbsp;
@@ -201,9 +201,9 @@
             </c:if>
 
 
-            <br><br>
-            <div>
-                <span style="font-size: 50px" align="left">
+            <br>
+            <div text-align="left" style="font-size: 40px;overflow:hidden;word-wrap:break-word;">
+                <span>
                 <b>&lt;&nbsp;${actionBean.diary.title}&nbsp;&gt;</b>
             </span>
             </div>
@@ -267,7 +267,7 @@
             <div class="comments">
                 <div>
                     <stripes:form beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean" onkeydown="return captureReturnKey(event);" onsubmit="checkEmpty(event)">
-                        <stripes:text size="100%" name="comments.comment" id="content"/>
+                        <stripes:text size="100%" name="comments.comment" id="content" maxlength="1000"/>
                         <br><br>
                         <stripes:submit name="insertComment" value="Submit" />
                     </stripes:form>

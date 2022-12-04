@@ -35,7 +35,7 @@
         <div>
             <span style="font-size: 30px" align="left">
                 <span class="title">
-                        <stripes:text name="comments.comment" id="content" value="${actionBean.comments.comment}"
+                        <stripes:text name="comments.comment" id="content" value="${actionBean.comments.comment}"  maxlength="1000"
                           style="
                                        font-size: 20px;
                                        width: 50%;

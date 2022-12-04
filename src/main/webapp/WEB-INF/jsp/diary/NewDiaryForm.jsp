@@ -59,7 +59,7 @@
                 <div>
                     <span style="font-size: 30px" align="left">
                         <span class="title">
-                            <stripes:text  name="diary.title" id="title"
+                            <stripes:text  name="diary.title" id="title" maxlength="80"
                                                style="
                                                font-size: 20px;
                                                width: 50%;
