@@ -390,7 +390,7 @@ public class DiaryActionBean extends AbstractActionBean{
         return new RedirectResolution(DiaryActionBean.class);
     }
     public Resolution getUpdateCommentForm(){
-        if (!isAuthenticated() || comments.getC_no() == 0 || !isMyDiaryOrComments(diaryService.getDiaryUser(no)) || no == 0)
+        if (!isAuthenticated() || comments.getC_no() == 0 || !isMyDiaryOrComments(diaryService.getCommentUser(comments.getC_no())) || no == 0)
             return new RedirectResolution(DiaryActionBean.class, "getDiaryContent");
 
         comments = diaryService.getComment(comments.getC_no());
