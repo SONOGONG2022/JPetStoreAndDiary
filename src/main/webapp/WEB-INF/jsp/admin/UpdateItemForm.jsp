@@ -56,7 +56,7 @@
       <th>Quantity</th>
     </tr>
     <tr>
-      <td>${actionBean.product.productId}</td>
+      <td>${actionBean.itemId}</td>
       <td><stripes:text name="item.attribute1" id="att"/></td>
       <td><stripes:text name="item.listPrice" id="price"/></td>
       <td><stripes:text name="item.quantity" id="qtt"/></td>
