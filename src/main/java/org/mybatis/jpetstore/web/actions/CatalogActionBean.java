@@ -261,6 +261,10 @@ public class CatalogActionBean extends AbstractActionBean {
       setMessage("You are not authorized to access this page.");
       return new ForwardResolution(ERROR);
     }
+    if(catalogService.getItem(item.getItemId()) != null){
+      setMessage("\'" + item.getItemId() + "\'" + " already exists. Please try another itemId.");
+      return new ForwardResolution(ERROR);
+    }
     item.setProductId(productId);
     catalogService.addItem(item);
     itemList = catalogService.getItemListByProduct(productId);
