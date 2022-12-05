@@ -8,7 +8,6 @@ import org.mybatis.jpetstore.domain.Likes;
 import org.mybatis.jpetstore.service.DiaryService;
 
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -150,6 +149,9 @@ public class DiaryActionBean extends AbstractActionBean{
     private int doLike=0;
     public void setDoLike(int doLike){this.doLike=doLike;}
 
+    private int role =0;
+    public void setRole(int role){this.role = role;}
+
     public Resolution viewMyDiary(){
         if (!isAuthenticated())
             return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
@@ -233,7 +235,7 @@ public class DiaryActionBean extends AbstractActionBean{
      * @return Redirect, 양육일기 삭제
      */
     public Resolution deleteDiary(){
-        if (!isAuthenticated() || !isMyDiaryOrComments(diary.getUserid()) || no == 0)
+        if (!isAuthenticated() || (!isMyDiaryOrComments(diary.getUserid()) && role == 0 )|| no == 0)
             return new ForwardResolution(MAIN);
         //파일 삭제 메소드가 추가되었습니다. 최종적으로 주석을 해제하시면 됩니다.
         //fileDelete(diaryService.getFilename(no));
@@ -332,6 +334,7 @@ public class DiaryActionBean extends AbstractActionBean{
             return false;
         } else if (accountBean.isAuthenticated()) {
             myUserid = accountBean.getAccount().getUsername();
+            role=accountBean.getAccount().getRole();
             return true;
         } else {
             return false;
@@ -429,7 +432,7 @@ public class DiaryActionBean extends AbstractActionBean{
      * @return Redirect, 덧글 삭제
      */
     public Resolution deleteComment(){
-        if (!isAuthenticated() && isMyDiaryOrComments(diaryService.getCommentUser(comments.getC_no())))
+        if (!isAuthenticated() || no == 0 || comments.getC_no() == 0 || (!isMyDiaryOrComments(diaryService.getCommentUser(comments.getC_no())) && role == 0))
             return new RedirectResolution(DiaryActionBean.class);
         diaryService.deleteComment(comments);
         int memory = no;
@@ -439,6 +442,7 @@ public class DiaryActionBean extends AbstractActionBean{
     }
 
     public void clear() {
+        role =0;
         no = 0;
         page = 1;
         page2 = 1;

@@ -240,6 +240,8 @@
                         &nbsp;&nbsp;수정&nbsp;&nbsp;
                     </stripes:link>
                     </span>
+                </c:if>
+                <c:if test="${sessionScope.accountBean.account.role eq 1 || actionBean.diary.userid == sessionScope.accountBean.account.username}">
                     <span style="margin-left: 1%; font-size: 15px; border-radius:15px; padding: 4px; background-color: #aaaaaa">
                     <stripes:link
                             beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
@@ -318,6 +320,7 @@
                         <div class="comments-content">
                             <span  style="width:300px;overflow:hidden;word-wrap:break-word;">${comments.comment}</span>
                         </div>
+                        <div align="right">
                         <c:if test="${comments.userid == sessionScope.accountBean.account.username}">
                             <span style="margin-left: 87%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa">
                             <stripes:link
@@ -327,7 +330,9 @@
                                 &nbsp;&nbsp;수정&nbsp;&nbsp;
                             </stripes:link>
                             </span>
-                            <span style="margin-left: 1%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa">
+                        </c:if>
+                        <c:if test="${sessionScope.accountBean.account.role eq 1 || actionBean.diary.userid == sessionScope.accountBean.account.username}">
+                            <span style=" margin-left: 1%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa" >
                             <stripes:link
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                                     event="deleteComment">
@@ -337,6 +342,7 @@
                             </stripes:link>
                             </span>
                         </c:if>
+                        </div>
                     </div>
                 </c:forEach>
             </div>
