@@ -28,6 +28,32 @@
     else if(document.getElementById('qtt').value == ''){
       e.preventDefault()
       alert('Quantity를 입력하세요')}
+
+    if (isNaN(document.getElementById('price').value)) {
+      e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
+      alert("List Price는 숫자만 입력 가능합니다");
+    }
+    else if (isNaN(document.getElementById('qtt').value)) {
+      e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
+      alert("Quantity는 숫자만 입력 가능합니다");
+    }
+
+    if (document.getElementById('price').value > 99999999.99) {
+      e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
+      alert("List Price는 99,999,999.99이하까지만 입력가능합니다.");
+    }
+    else if (document.getElementById('price').value <= 0) {
+      e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
+      alert("List Price는 0 이상만 입력가능합니다.");
+    }
+    else if (document.getElementById('qtt').value < 0) {
+      e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
+      alert("Quantity는 0 이상만 입력가능합니다.");
+    }
+    else if (!Number.isInteger(Number(document.getElementById('qtt').value))) {
+      e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
+      alert("Quantity는 정수만 입력 가능합니다");
+    }
   }
 </script>
 
@@ -42,7 +68,7 @@
   Return to Product
 </stripes:link></div>
 
-<div id="Catalog"><stripes:form  onkeydown="return captureReturnKey(event);" onsubmit="checkEmpty(event)"
+<div id="Catalog"><stripes:form onsubmit="checkEmpty(event)"
         beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
         focus="">
 
@@ -57,9 +83,9 @@
     </tr>
     <tr>
       <td>${actionBean.itemId}</td>
-      <td><stripes:text name="item.attribute1" id="att"/></td>
-      <td><stripes:text name="item.listPrice" id="price"/></td>
-      <td><stripes:text name="item.quantity" id="qtt"/></td>
+      <td><stripes:text name="item.attribute1" id="att" maxlength="80"/></td>
+      <td><stripes:text name="item.listPrice" id="price" maxlength="11" formatType="number"/></td>
+      <td><stripes:text name="item.quantity" id="qtt" maxlength="11" formatType="number"/></td>
     </tr>
   </table>
   <stripes:submit name="updateItem" value="submit" />
