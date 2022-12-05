@@ -15,6 +15,30 @@
        limitations under the License.
 
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+
+<script>
+  // 엔터키 제출 방지
+  function captureReturnKey(e) {
+    if(e.keyCode==13 && e.target.type != 'textarea')
+      return false;
+  }
+  function checkEmpty(e){
+    if(document.getElementById('id').value == ''){
+      e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
+      alert('Item ID를 입력하세요')}
+    else if(document.getElementById('att').value == ''){
+      e.preventDefault()
+      alert('Description을 입력하세요')}
+    else if(document.getElementById('price').value == ''){
+      e.preventDefault()
+      alert('List Price를 입력하세요')}
+    else if(document.getElementById('qtt').value == ''){
+      e.preventDefault()
+      alert('Quantity를 입력하세요')}
+  }
+</script>
+
 <%@ include file="../common/IncludeTop.jsp"%>
 
 <jsp:useBean id="catalog"
@@ -26,7 +50,7 @@
   Return to Product
 </stripes:link></div>
 
-<div id="Catalog"><stripes:form
+<div id="Catalog"><stripes:form  onkeydown="return captureReturnKey(event);" onsubmit="checkEmpty(event)"
         beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
         focus="">
 
@@ -42,10 +66,10 @@
     </tr>
     <tr>
       <td>${actionBean.product.productId}</td>
-      <td><stripes:text name="item.itemId" /></td>
-      <td><stripes:text name="item.attribute1" /></td>
-      <td><stripes:text name="item.listPrice" /></td>
-      <td><stripes:text name="item.quantity" /></td>
+      <td><stripes:text name="item.itemId" id="id"/></td>
+      <td><stripes:text name="item.attribute1" id="att"/></td>
+      <td><stripes:text name="item.listPrice" id="price"/></td>
+      <td><stripes:text name="item.quantity" id="qtt"/></td>
     </tr>
   </table>
   <stripes:submit name="addItem" value="submit" />

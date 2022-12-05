@@ -54,7 +54,7 @@
 </div>
 
 <div id="Menu">
-<div id="MenuContent"><stripes:link
+<div id="MenuContent" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><stripes:link
 	beanclass="org.mybatis.jpetstore.web.actions.CartActionBean"
 	event="viewCart">
 	<img align="middle" name="img_cart" src="../images/cart.gif" />
@@ -103,7 +103,19 @@
 		<stripes:param name="page" value="1" />
 	Pet Diary
 </stripes:link>
-	<img align="middle" src="../images/separator.gif" /> <a
+	<img align="middle" src="../images/separator.gif" />
+	<c:if test="${sessionScope.accountBean != null}">
+		<c:if test="${sessionScope.accountBean.authenticated}">
+			<stripes:link
+					beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
+					event="viewMyDiary">
+				<stripes:param name="page2" value="1" />
+				My Diary
+				<img align="middle" src="../images/separator.gif"/>
+			</stripes:link>
+		</c:if>
+	</c:if>
+	<a
 	href="../help.html">?</a></div>
 </div>
 
