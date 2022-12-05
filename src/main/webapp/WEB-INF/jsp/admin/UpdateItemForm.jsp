@@ -68,7 +68,7 @@
   Return to Product
 </stripes:link></div>
 
-<div id="Catalog"><stripes:form  onkeydown="return captureReturnKey(event);" onsubmit="checkEmpty(event)"
+<div id="Catalog"><stripes:form onsubmit="checkEmpty(event)"
         beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
         focus="">
 
