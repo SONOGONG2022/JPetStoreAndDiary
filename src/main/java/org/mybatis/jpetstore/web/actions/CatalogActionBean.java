@@ -273,6 +273,7 @@ public class CatalogActionBean extends AbstractActionBean {
       setMessage("You are not authorized to access this page.");
       return new ForwardResolution(ERROR);
     }
+    item = catalogService.getItem(itemId);
     return new ForwardResolution(UPDATE_ITEM);
   }
 
