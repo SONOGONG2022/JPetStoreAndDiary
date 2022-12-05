@@ -46,8 +46,7 @@
       e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
       alert("Quantity는 숫자만 입력 가능합니다");
     }
-
-    if (document.getElementById('price').value > 99999999.99) {
+    else if (document.getElementById('price').value > 99999999.99) {
       e.preventDefault()//제출완료 페이지로 넘어가는 것 방지
       alert("List Price는 99,999,999.99이하까지만 입력가능합니다.");
     }
