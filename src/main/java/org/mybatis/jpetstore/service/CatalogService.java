@@ -87,4 +87,23 @@ public class CatalogService {
   public boolean isItemInStock(String itemId) {
     return itemMapper.getInventoryQuantity(itemId) > 0;
   }
+
+  public List<Product> getProductList() {
+    return productMapper.getProductList();
+  }
+
+  public void deleteItem(String itemId){
+    itemMapper.deleteItem(itemId);
+    itemMapper.deleteInventory(itemId);
+  }
+
+  public void addItem(Item item) {
+    itemMapper.addItem(item);
+    itemMapper.addInventory(item);
+  }
+
+  public void updateItem(Item item) {
+    itemMapper.updateItem(item);
+    itemMapper.updateInventory(item);
+  }
 }

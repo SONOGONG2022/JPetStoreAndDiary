@@ -79,4 +79,39 @@
     WHERE ITEMID = #{itemId}
   </update>
 
+  <delete id="deleteItem">
+    delete from ITEM
+    where ITEMID = #{itemId}
+  </delete>
+
+  <delete id="deleteInventory">
+    delete from INVENTORY
+    where ITEMID = #{itemId}
+  </delete>
+
+  <insert id="addItem" parameterType="Item">
+    INSERT INTO ITEM
+      (ITEMID , PRODUCTID, ATTR1, LISTPRICE)
+    VALUES
+      (#{itemId}, #{productId}, #{attribute1}, #{listPrice})
+  </insert>
+
+  <insert id="addInventory" parameterType="Item">
+    INSERT INTO INVENTORY
+      (ITEMID, QTY)
+    VALUES
+      (#{itemId}, #{quantity})
+  </insert>
+
+  <update id="updateItem" parameterType="Item">
+    UPDATE ITEM
+    SET ATTR1 = #{attribute1}, LISTPRICE = #{listPrice}
+    WHERE ITEMID = #{itemId}
+  </update>
+
+  <update id="updateInventory" parameterType="Item">
+    UPDATE INVENTORY
+    SET QTY=#{quantity}
+    WHERE ITEMID = #{itemId}
+  </update>
 </mapper>

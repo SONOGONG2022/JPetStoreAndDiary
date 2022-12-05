@@ -17,9 +17,9 @@ package org.mybatis.jpetstore.web.actions;
 
 import java.util.List;
 
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.SessionScope;
+import javax.servlet.http.HttpSession;
+
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import org.mybatis.jpetstore.domain.Category;
@@ -42,6 +42,11 @@ public class CatalogActionBean extends AbstractActionBean {
   private static final String VIEW_PRODUCT = "/WEB-INF/jsp/catalog/Product.jsp";
   private static final String VIEW_ITEM = "/WEB-INF/jsp/catalog/Item.jsp";
   private static final String SEARCH_PRODUCTS = "/WEB-INF/jsp/catalog/SearchProducts.jsp";
+  private static final String VIEW_PRODUCT_LIST = "/WEB-INF/jsp/admin/AdminDashboard.jsp";
+  private static final String VIEW_ADMIN_PRODUCT = "/WEB-INF/jsp/admin/AdminProduct.jsp";
+  private static final String ADD_ITEM = "/WEB-INF/jsp/admin/AddItemForm.jsp";
+  private static final String UPDATE_ITEM = "/WEB-INF/jsp/admin/UpdateItemForm.jsp";
+  private static final String ERROR = "/WEB-INF/jsp/common/Error.jsp";
 
   @SpringBean
   private transient CatalogService catalogService;
@@ -53,6 +58,8 @@ public class CatalogActionBean extends AbstractActionBean {
   private List<Category> categoryList;
 
   private String productId;
+
+  private String attribute1;
   private Product product;
   private List<Product> productList;
 
@@ -82,6 +89,14 @@ public class CatalogActionBean extends AbstractActionBean {
 
   public void setProductId(String productId) {
     this.productId = productId;
+  }
+
+  public String getAttribute1() {
+    return attribute1;
+  }
+
+  public void setAttribute1(String attribute1) {
+    this.attribute1 = attribute1;
   }
 
   public String getItemId() {
@@ -195,6 +210,92 @@ public class CatalogActionBean extends AbstractActionBean {
       productList = catalogService.searchProductList(keyword.toLowerCase());
       return new ForwardResolution(SEARCH_PRODUCTS);
     }
+  }
+
+  public ForwardResolution viewAdminProduct() {
+    if (!isAdminUser()) {
+      setMessage("You are not authorized to access this page.");
+      return new ForwardResolution(ERROR);
+    }
+    if (productId != null) {
+      itemList = catalogService.getItemListByProduct(productId);
+      product = catalogService.getProduct(productId);
+    }
+    return new ForwardResolution(VIEW_ADMIN_PRODUCT);
+  }
+
+  public ForwardResolution viewAllProduct() {
+    if (!isAdminUser()) {
+      setMessage("You are not authorized to access this page.");
+      return new ForwardResolution(ERROR);
+    }
+    productList = catalogService.getProductList();
+    return new ForwardResolution(VIEW_PRODUCT_LIST);
+  }
+
+  public ForwardResolution deleteItem() {
+    if (!isAdminUser()) {
+      setMessage("You are not authorized to access this page.");
+      return new ForwardResolution(ERROR);
+    }
+    if (itemId != null) {
+      catalogService.deleteItem(itemId);
+      itemId = null;
+      item = new Item();
+    }
+    itemList = catalogService.getItemListByProduct(productId);
+    return new ForwardResolution(VIEW_ADMIN_PRODUCT);
+  }
+
+  public ForwardResolution addItemForm() {
+    if (!isAdminUser()) {
+      setMessage("You are not authorized to access this page.");
+      return new ForwardResolution(ERROR);
+    }
+    item = new Item();
+    return new ForwardResolution(ADD_ITEM);
+  }
+
+  public Resolution addItem() {
+    if (!isAdminUser()) {
+      setMessage("You are not authorized to access this page.");
+      return new ForwardResolution(ERROR);
+    }
+    item.setProductId(productId);
+    catalogService.addItem(item);
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution(VIEW_ADMIN_PRODUCT);
+  }
+
+  public ForwardResolution updateItemForm() {
+    if (!isAdminUser()) {
+      setMessage("You are not authorized to access this page.");
+      return new ForwardResolution(ERROR);
+    }
+    return new ForwardResolution(UPDATE_ITEM);
+  }
+
+  public Resolution updateItem() {
+    if (!isAdminUser()) {
+      setMessage("You are not authorized to access this page.");
+      return new ForwardResolution(ERROR);
+    }
+    item.setItemId(itemId);
+    catalogService.updateItem(item);
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution(VIEW_ADMIN_PRODUCT);
+  }
+
+  public boolean isAdminUser() {
+    HttpSession session = context.getRequest().getSession();
+    AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+    if(accountBean == null || !accountBean.isAuthenticated()) {
+      return false;
+    }
+    int role = accountBean.getAccount().getRole();
+    return role == 1;
   }
 
   /**
