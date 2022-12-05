@@ -201,7 +201,7 @@
             </c:if>
 
 
-            <br>
+            <br><br>
             <div text-align="left" style="font-size: 40px;overflow:hidden;word-wrap:break-word;">
                 <span>
                 <b>&lt;&nbsp;${actionBean.diary.title}&nbsp;&gt;</b>

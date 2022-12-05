@@ -41,9 +41,9 @@
         flex-wrap: wrap;
     }
     .card-wrap {
-        width: 15em;
+        max-width: 25%;
         border-radius: 10px;
-        margin: 3em;
+        margin: 4.16%;
         display: flex;
         flex: 1 1 20%;
         flex-direction: column;
@@ -135,7 +135,8 @@
                         beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
                         event="viewDiaryBoard">
                     <stripes:param name="orderCategory" value="ALL" />
-                    <stripes:param name="page" value="1" />
+                    <stripes:param name="page" value="1"/>
+                    <stripes:param name="reset" value="1" />
                     <span>ALL</span>
                 </stripes:link>
             </c:otherwise>
