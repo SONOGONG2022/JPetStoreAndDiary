@@ -102,4 +102,16 @@
     VALUES
       (#{itemId}, #{quantity})
   </insert>
+
+  <update id="updateItem" parameterType="Item">
+    UPDATE ITEM
+    SET ATTR1 = #{attribute1}, LISTPRICE = #{listPrice}
+    WHERE ITEMID = #{itemId}
+  </update>
+
+  <update id="updateInventory" parameterType="Item">
+    UPDATE INVENTORY
+    SET QTY=#{quantity}
+    WHERE ITEMID = #{itemId}
+  </update>
 </mapper>

@@ -101,4 +101,9 @@ public class CatalogService {
     itemMapper.addItem(item);
     itemMapper.addInventory(item);
   }
+
+  public void updateItem(Item item) {
+    itemMapper.updateItem(item);
+    itemMapper.updateInventory(item);
+  }
 }
