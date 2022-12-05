@@ -95,6 +95,14 @@
 							event="editAccountForm">
 						My Account
 					</stripes:link>
+					<c:if test="${sessionScope.accountBean.account.role eq 1}">
+						<img align="middle" src="../images/separator.gif" />
+						<stripes:link
+								beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+								event="viewAllProduct">
+							Admin Dashboard
+						</stripes:link>
+					</c:if>
 				</c:if>
 			</c:if>
 
