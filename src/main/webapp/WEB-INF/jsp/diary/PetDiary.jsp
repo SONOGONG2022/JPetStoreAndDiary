@@ -52,7 +52,7 @@
     .thumbnail {
         display: block;
         max-width: 100%;
-        max-height: 100%;
+        max-height: 200px;
         text-decoration: none;
     }
     .detail {
