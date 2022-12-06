@@ -331,7 +331,7 @@
                             </stripes:link>
                             </span>
                         </c:if>
-                        <c:if test="${sessionScope.accountBean.account.role eq 1 || actionBean.diary.userid == sessionScope.accountBean.account.username}">
+                        <c:if test="${sessionScope.accountBean.account.role eq 1 || comments.userid == sessionScope.accountBean.account.username}">
                             <span style=" margin-left: 1%; font-size: 10px; border-radius:15px; padding: 2px; background-color: #aaaaaa" >
                             <stripes:link
                                     beanclass="org.mybatis.jpetstore.web.actions.DiaryActionBean"
