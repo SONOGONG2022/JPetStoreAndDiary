@@ -218,7 +218,9 @@ public class DiaryActionBean extends AbstractActionBean{
             return new RedirectResolution(DiaryActionBean.class, "viewDiaryBoard");
         //테스트할 때는 톰캣이 종료 및 실행될때마다 정적 리소스가 초기화 되기 때문에, diary.imgurl = "default.png"로 다 넣으시면 됩니다
 //        try {
-//            fileUpload();
+//          if(petImage!=null){
+//              fileUpload();
+//          }
 //        } catch (IOException e) {
 //            setMessage("Image File Error");
 //            return new ForwardResolution(MAIN);

@@ -34,7 +34,7 @@
     </insert>
 
     <update id="updateDiary" parameterType="Diary">
-        update DIARY set title = #{title}, content = #{content}, imgurl = #{imgurl} where no = #{no};
+        update DIARY set title = #{title}, content = #{content}, imgurl = #{imgurl}, categoryid=#{categoryid} where no = #{no};
     </update>
 
     <delete id="deleteDiary" parameterType="int">
